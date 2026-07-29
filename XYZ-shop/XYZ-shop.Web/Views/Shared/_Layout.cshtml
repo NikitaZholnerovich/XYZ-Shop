@@ -1,49 +1,65 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - XYZ_shop.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/XYZ_shop.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/styles.css">
+    @* <link rel="stylesheet" href="/css/steam/recommendations.css"> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/js/steam/notification.js"></script>
+    @RenderSection("Scripts", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">XYZ_shop.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="notifications"></div>
+    <header class="site-header">
+        <div class="topbar">
+            <a class="brand" href="/Steam/Index">STEAM</a>
+
+            <nav class="primary-nav">
+                <ul class="nav-list">
+                    <li class="store-link"><a href="/Steam/Index">Steam</a></li>
+                    <li class="catalog-link"><a href="/Steam/Catalog">Catalog</a></li>
+                    <li class="community-chat-link"><a href="/Steam/CommunityChat">CommunityChat</a></li>
+                    <li><a href="/Steam/Recommendations">Recommendations</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="topbar-actions">
+                <form class="search">
+                    <input name="q" type="search" placeholder="Search" />
+                    <button type="submit">Search</button>
+                </form>
             </div>
-        </nav>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-logo">STEAM</div>
+                <div class="footer-links">
+                    <a href="#">About_Company</a>
+                    <a href="#">Jobs</a>
+                    <a href="#">Steamworks</a>
+                    <a href="#">Support</a>
+                    <a href="#">Privacy_Policy</a>
+                    <a href="#">Legal</a>
+                </div>
+            </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - XYZ_shop.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-bottom">
+                <p>
+                    © 2026 Nikita Corporation. All rights reserved. All trademarks are property of their respective owners.
+                </p>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
