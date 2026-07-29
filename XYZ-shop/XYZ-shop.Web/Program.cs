@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Infrastructure.Data;
+using XYZ_shop.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<XyzDbContext>(options =>
@@ -12,13 +14,19 @@ builder.Services.AddDbContext<XyzDbContext>(options =>
         b => b.MigrationsAssembly("Xyz-shop.Infrastructure") 
     ));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IGameGenreRepository, GameGenreRepository>();
+builder.Services.AddScoped<IGameReviewRepository, GameReviewRepository>();
+builder.Services.AddScoped<ICommunityChatMessageRepository, CommunityChatMessageRepository>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
