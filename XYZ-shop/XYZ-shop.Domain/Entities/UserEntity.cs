@@ -1,10 +1,14 @@
 ﻿
+using XYZ_shop.Domain.Enums;
+
 namespace XYZ_shop.Domain.Entities
 {
     public class UserEntity : BaseEntity
     {
         public string Login { get; set; }
         public string PasswordHash { get; set; }
+        public UserRole Role { get; set; }
+        public Language Language { get; set; }
         public string? AvatarUrl { get; set; }
         public int? UserProfileId { get; set; }
 

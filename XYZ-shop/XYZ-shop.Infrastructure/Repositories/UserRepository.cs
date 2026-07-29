@@ -5,7 +5,7 @@ using XYZ_shop.Domain.Entities;
 using XYZ_shop.Infrastructure.Data;
 using XYZ_shop.Infrastructure.Repositories;
 
-namespace WebNet23Online.Data.Repositories
+namespace XYZ_shop.Infrastructure.Repositories
 {
     public class UserRepository : BaseRepository<UserEntity>, IUserRepository
     {
