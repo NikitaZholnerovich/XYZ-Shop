@@ -1,0 +1,31 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using XYZ_shop.Application.Abstractions.Services;
+using XYZ_shop.Web.Mapping;
+
+namespace XYZ_shop.Web.Controllers
+{
+    public class SteamController : Controller
+    {
+        private const int CatalogDefaultPageSize = 12;
+        private const int CatalogMaxPageSize = 48;
+
+        private readonly ICatalogService _catalogService;
+        private readonly ICatalogViewModelMapper _catalogViewModelMapper;
+
+        public SteamController(
+            ICatalogService catalogService,
+            ICatalogViewModelMapper catalogViewModelMapper)
+        {
+            _catalogService = catalogService;
+            _catalogViewModelMapper = catalogViewModelMapper;
+        }
+
+        public IActionResult Index()
+        {
+            var catalog = _catalogService.GetGamesForHomePage();
+            var viewModel = _catalogViewModelMapper.ToViewModel(catalog);
+
+            return View(viewModel);
+        }
+    }
+}

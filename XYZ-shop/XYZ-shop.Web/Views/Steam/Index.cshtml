@@ -1,0 +1,89 @@
+
+@model SteamHomeViewModel
+@{
+    Layout = "_Layout";
+}
+<main class="page">
+    <section class="section">
+        <h1 class="page-title">Store</h1>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Featured</h2>
+        @foreach (var game in Model.Featured)
+        {
+            <article class="feature-card">
+                <div class="feature-media" aria-hidden="true">
+                    <img src=@game.ImageUrl alt="Game Title cover" />
+                </div>
+
+                <div class="feature-content">
+                    <h3 class="feature-title">@game.Title</h3>
+                    @if (game.Genres != null && game.Genres.Any())
+                    {
+                        <div class="feature-genres">
+                            @foreach (var genre in game.Genres)
+                            {
+                                <span class="game-genre">@genre</span>
+                            }
+                        </div>
+                    }
+                    <p class="feature-text">
+                        @game.Description
+                    </p>
+
+                    <div class="feature-footer">
+                        <span class="price">$@game.Price.ToString("0.00")</span>
+                        <div class="feature-buttons">
+                            <a class="btn" href="/Steam/GameDetails/@game.Id">View</a>
+                            <button class="btn-cart" type="button">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Special Offers</h2>
+
+        <div class="cards">
+            @foreach (var game in Model.SpecialOffers)
+            {
+                <article class="card">
+                    <div class="card-media">
+                        <img src=@game.ImageUrl />
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@game.Title</h3>
+                        @if (game.Genres != null && game.Genres.Any())
+                        {
+                            <div class="feature-genres">
+                                @foreach (var genre in game.Genres)
+                                {
+                                    <span class="game-genre">@genre</span>
+                                }
+                            </div>
+                        }
+                        <div class="card-footer">
+                            <span class="price">$@game.Price.ToString("0.00")</span>
+                            <div class="card-buttons">
+                                <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">View</a>
+                                <button class="btn-cart btn--small" type="button">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    </section>
+    <section class="section">
+        <div>
+            <a class="btn catalog-button" href="/Steam/Catalog">Catalog</a>
+        </div>
+    </section>
+</main>
+
+@* @section Scripts {
+    <script src="~/js/steam/main-carousel.js" asp-append-version="true"></script>
+} *@
