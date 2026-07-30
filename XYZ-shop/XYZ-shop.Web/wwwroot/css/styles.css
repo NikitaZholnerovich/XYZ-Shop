@@ -558,9 +558,20 @@ a {
         margin: 0;
     }
 
+.catalog-filter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    align-items: end;
+}
+
 .form-group {
     margin-bottom: 25px;
 }
+
+    .catalog-filter .form-group {
+        margin-bottom: 0;
+    }
 
     .form-group label {
         display: block;
@@ -589,6 +600,29 @@ a {
     display: flex;
     gap: 12px;
 }
+
+    .catalog-filter .form-actions {
+        margin-top: 0;
+    }
+
+.catalog-empty {
+    background: #1a2533;
+    border: 1px solid #2a475e;
+    border-radius: 10px;
+    padding: 28px;
+    text-align: center;
+}
+
+    .catalog-empty h3 {
+        margin: 0 0 8px;
+        color: #ffffff;
+        font-size: 20px;
+    }
+
+    .catalog-empty p {
+        margin: 0;
+        color: #8f98a0;
+    }
 
 /* Game details page */
 .section {
