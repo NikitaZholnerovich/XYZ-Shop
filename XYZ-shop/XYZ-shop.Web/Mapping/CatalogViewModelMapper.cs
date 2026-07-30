@@ -44,6 +44,45 @@ namespace XYZ_shop.Web.Mapping
             };
         }
 
+        public AddGameViewModel ToViewModel(GameFormOptionsDto form)
+        {
+            return new AddGameViewModel
+            {
+                AllGenres = ToGenreSelectList(form.Genres),
+                Publishers = ToPublisherSelectList(form.Publishers),
+            };
+        }
+
+        public EditGameViewModel ToViewModel(EditGameFormDto form)
+        {
+            return new EditGameViewModel
+            {
+                Id = form.Game.Id,
+                Title = form.Game.Title,
+                ImageUrl = form.Game.ImageUrl,
+                Description = form.Game.Description,
+                Price = form.Game.Price,
+                PublisherId = form.Game.PublisherId,
+                SelectedGenreIds = form.Game.SelectedGenreIds,
+                AllGenres = ToGenreSelectList(form.Options.Genres),
+                Publishers = ToPublisherSelectList(form.Options.Publishers),
+            };
+        }
+
+        public AddGameViewModel FillOptions(AddGameViewModel viewModel, GameFormOptionsDto options)
+        {
+            viewModel.AllGenres = ToGenreSelectList(options.Genres);
+            viewModel.Publishers = ToPublisherSelectList(options.Publishers);
+            return viewModel;
+        }
+
+        public EditGameViewModel FillOptions(EditGameViewModel viewModel, GameFormOptionsDto options)
+        {
+            viewModel.AllGenres = ToGenreSelectList(options.Genres);
+            viewModel.Publishers = ToPublisherSelectList(options.Publishers);
+            return viewModel;
+        }
+
         public CatalogFilterDto ToDto(CatalogFilterViewModel filter)
         {
             return new CatalogFilterDto
@@ -57,21 +96,6 @@ namespace XYZ_shop.Web.Mapping
             };
         }
 
-        public AddGameViewModel ToAddGameViewModel(
-            List<CatalogGenreDto> genres,
-            List<PublisherDto> publishers)
-        {
-            return new AddGameViewModel
-            {
-                AllGenres = genres
-                    .Select(g => new SelectListItem(g.Name, g.Id.ToString()))
-                    .ToList(),
-                Publishers = publishers
-                    .Select(p => new SelectListItem(p.Name, p.Id.ToString()))
-                    .ToList(),
-            };
-        }
-
         public AddGameDto ToDto(AddGameViewModel game)
         {
             return new AddGameDto
@@ -81,6 +105,20 @@ namespace XYZ_shop.Web.Mapping
                 Description = game.Description,
                 Price = game.Price,
                 PublisherId = game.PublisherId,
+                SelectedGenreIds = game.SelectedGenreIds,
+            };
+        }
+
+        public EditGameDto ToDto(EditGameViewModel game)
+        {
+            return new EditGameDto
+            {
+                Id = game.Id,
+                Title = game.Title,
+                ImageUrl = game.ImageUrl,
+                Description = game.Description,
+                Price = game.Price,
+                PublisherId = game.PublisherId ?? 0,
                 SelectedGenreIds = game.SelectedGenreIds,
             };
         }
@@ -128,6 +166,20 @@ namespace XYZ_shop.Web.Mapping
                 Price = game.Price,
                 Genres = game.Genres
             };
+        }
+
+        private List<SelectListItem> ToGenreSelectList(IEnumerable<CatalogGenreDto> genres)
+        {
+            return genres
+                .Select(g => new SelectListItem(g.Name, g.Id.ToString()))
+                .ToList();
+        }
+
+        private List<SelectListItem> ToPublisherSelectList(IEnumerable<PublisherDto> publishers)
+        {
+            return publishers
+                .Select(p => new SelectListItem(p.Name, p.Id.ToString()))
+                .ToList();
         }
     }
 }

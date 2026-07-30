@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Web.Mapping;
 using XYZ_shop.Web.Models;
@@ -50,7 +49,6 @@ namespace XYZ_shop.Web.Controllers
 
             var catalog = _catalogService.GetCatalog(_catalogViewModelMapper.ToDto(filter));
             var model = _catalogViewModelMapper.ToViewModel(catalog);
-            // model.IsUserAtLeastModerator = _authService.AtLeastModerator();
 
             return View(model);
         }
@@ -74,7 +72,7 @@ namespace XYZ_shop.Web.Controllers
         //[IsModerator]
         public IActionResult AddGame()
         {
-            var viewModel = CreateAddGameViewModel();
+            var viewModel = _catalogViewModelMapper.ToViewModel(_catalogService.GetGameFormOptions());
 
             return View(viewModel);
         }
@@ -85,27 +83,44 @@ namespace XYZ_shop.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                FillAddGameOptions(viewModel);
+                _catalogViewModelMapper.FillOptions(viewModel, _catalogService.GetGameFormOptions());
                 return View(viewModel);
             }
+
             _catalogService.AddGame(_catalogViewModelMapper.ToDto(viewModel));
-            //_steamNotificationHub.Clients.All.NewGameAdded(viewModel.Title, viewModel.ImageUrl);
 
             return RedirectToAction(nameof(Catalog));
         }
 
-        private AddGameViewModel CreateAddGameViewModel()
+        [HttpGet]
+        //[EditForCreatorWithRequiredRole]
+        public IActionResult EditGame(int id)
         {
-            return _catalogViewModelMapper.ToAddGameViewModel(
-                _catalogService.GetGameGenres(),
-                _catalogService.GetPublishers());
+            var form = _catalogService.GetEditGameForm(id);
+
+            if (form == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = _catalogViewModelMapper.ToViewModel(form);
+
+            return View(viewModel);
         }
 
-        private void FillAddGameOptions(AddGameViewModel viewModel)
+        [HttpPost]
+        //[EditForCreatorWithRequiredRole]
+        public IActionResult EditGame(EditGameViewModel viewModel)
         {
-            var options = CreateAddGameViewModel();
-            viewModel.AllGenres = options.AllGenres;
-            viewModel.Publishers = options.Publishers;
+            if (!ModelState.IsValid)
+            {
+                _catalogViewModelMapper.FillOptions(viewModel, _catalogService.GetGameFormOptions());
+                return View(viewModel);
+            }
+
+            _catalogService.UpdateGame(_catalogViewModelMapper.ToDto(viewModel));
+
+            return RedirectToAction(nameof(GameDetails), new { id = viewModel.Id });
         }
     }
 }
