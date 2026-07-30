@@ -69,5 +69,43 @@ namespace XYZ_shop.Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        //[IsModerator]
+        public IActionResult AddGame()
+        {
+            var viewModel = CreateAddGameViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        //[IsModerator]
+        public IActionResult AddGame(AddGameViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                FillAddGameOptions(viewModel);
+                return View(viewModel);
+            }
+            _catalogService.AddGame(_catalogViewModelMapper.ToDto(viewModel));
+            //_steamNotificationHub.Clients.All.NewGameAdded(viewModel.Title, viewModel.ImageUrl);
+
+            return RedirectToAction(nameof(Catalog));
+        }
+
+        private AddGameViewModel CreateAddGameViewModel()
+        {
+            return _catalogViewModelMapper.ToAddGameViewModel(
+                _catalogService.GetGameGenres(),
+                _catalogService.GetPublishers());
+        }
+
+        private void FillAddGameOptions(AddGameViewModel viewModel)
+        {
+            var options = CreateAddGameViewModel();
+            viewModel.AllGenres = options.AllGenres;
+            viewModel.Publishers = options.Publishers;
+        }
     }
 }

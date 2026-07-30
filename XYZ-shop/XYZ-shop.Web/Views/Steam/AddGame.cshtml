@@ -1,0 +1,90 @@
+﻿@model AddGameViewModel
+@{
+    Layout = "_Layout";
+}
+<main class="page">
+    <section class="section">
+        <h1 class="page-title">Add New Game</h1>
+        <div class="catalog-header">
+            <p><a class="btn" href="/Steam/Catalog">← Back to Catalog</a></p>
+        </div>
+    </section>
+
+    <section class="section">
+        <form method="post" asp-controller="Steam" asp-action="AddGame">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Title, "Title")
+                @Html.ValidationMessageFor(x => x.Title)
+                @Html.TextBoxFor(x => x.Title, new {
+                @class = "form-control",
+                                placeholder = "Enter game title",
+                                required = "required"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.ImageUrl, "Image URL")
+                @Html.ValidationMessageFor(x => x.ImageUrl)
+                @Html.TextBoxFor(x => x.ImageUrl, new {
+                                @class = "form-control",
+                                placeholder = "https://example.com/image.jpg",
+                                type = "url"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description, "Description")
+                @Html.ValidationMessageFor(x => x.Description)
+                @Html.TextAreaFor(x => x.Description, new {
+                                @class = "form-control",
+                                rows = "5",
+                                placeholder = "Enter game description"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Price, "Price ($)")
+                @Html.ValidationMessageFor(x => x.Price)
+                @Html.TextBoxFor(x => x.Price, new {
+                                @class = "form-control",
+                                placeholder = "0.00",
+                                type = "number",
+                                step = "0.01",
+                                required = "required"
+                                })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.SelectedGenreIds, "Genres")
+                <select id="SelectedGenreIds" name="SelectedGenreIds" class="form-control" multiple required>
+                    @foreach (var genre in Model.AllGenres)
+                    {
+                        <option value="@genre.Value" selected="@(Model.SelectedGenreIds.Contains(int.Parse(genre.Value ?? "0")) ? "selected" : null)">
+                            @genre.Text
+                        </option>
+                    }
+                </select>
+                <small class="form-text text-muted">Hold Ctrl to select multiple genres</small>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.PublisherId, "Publisher")
+                <select id="PublisherId" name="PublisherId" class="form-control">
+                    <option value="">Select publisher</option>
+                    @foreach (var publisher in Model.Publishers)
+                    {
+                        <option value="@publisher.Value" selected="@(Model.PublisherId.ToString() == publisher.Value ? "selected" : null)">
+                            @publisher.Text
+                        </option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(x => x.PublisherId)
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Save Game</button>
+                <a href="/Steam/Catalog" class="btn">Cancel</a>
+            </div>
+        </form>
+    </section>
+</main>

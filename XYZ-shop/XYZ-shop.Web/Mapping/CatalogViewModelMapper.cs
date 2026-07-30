@@ -57,6 +57,34 @@ namespace XYZ_shop.Web.Mapping
             };
         }
 
+        public AddGameViewModel ToAddGameViewModel(
+            List<CatalogGenreDto> genres,
+            List<PublisherDto> publishers)
+        {
+            return new AddGameViewModel
+            {
+                AllGenres = genres
+                    .Select(g => new SelectListItem(g.Name, g.Id.ToString()))
+                    .ToList(),
+                Publishers = publishers
+                    .Select(p => new SelectListItem(p.Name, p.Id.ToString()))
+                    .ToList(),
+            };
+        }
+
+        public AddGameDto ToDto(AddGameViewModel game)
+        {
+            return new AddGameDto
+            {
+                Title = game.Title,
+                ImageUrl = game.ImageUrl,
+                Description = game.Description,
+                Price = game.Price,
+                PublisherId = game.PublisherId,
+                SelectedGenreIds = game.SelectedGenreIds,
+            };
+        }
+
         public GameDetailsViewModel ToViewModel(GameDetailsDto game)
         {
             return new GameDetailsViewModel

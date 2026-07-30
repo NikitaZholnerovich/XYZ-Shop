@@ -8,7 +8,9 @@ namespace XYZ_shop.Web.Mapping
         SteamHomeViewModel ToViewModel(HomeCatalogDto catalog);
         CatalogViewModel ToViewModel(CatalogDto catalog);
         GameDetailsViewModel ToViewModel(GameDetailsDto game);
+        AddGameViewModel ToAddGameViewModel(List<CatalogGenreDto> genres, List<PublisherDto> publishers);
         CatalogFilterDto ToDto(CatalogFilterViewModel filter);
+        AddGameDto ToDto(AddGameViewModel game);
         SteamGameViewModel ToViewModel(GameDto game);
     }
 }
