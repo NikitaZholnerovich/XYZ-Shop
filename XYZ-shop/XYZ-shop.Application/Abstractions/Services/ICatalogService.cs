@@ -6,5 +6,6 @@ namespace XYZ_shop.Application.Abstractions.Services
     {
         HomeCatalogDto GetGamesForHomePage();
         CatalogDto GetCatalog(CatalogFilterDto? filter = null);
+        GameDetailsDto? GetGameDetails(int id);
     }
 }

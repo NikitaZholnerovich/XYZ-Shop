@@ -7,6 +7,7 @@ namespace XYZ_shop.Web.Mapping
     {
         SteamHomeViewModel ToViewModel(HomeCatalogDto catalog);
         CatalogViewModel ToViewModel(CatalogDto catalog);
+        GameDetailsViewModel ToViewModel(GameDetailsDto game);
         CatalogFilterDto ToDto(CatalogFilterViewModel filter);
         SteamGameViewModel ToViewModel(GameDto game);
     }

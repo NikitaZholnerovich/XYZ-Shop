@@ -1,0 +1,108 @@
+﻿
+@model GameDetailsViewModel
+@{
+    Layout = "_Layout";
+}
+
+<main class="page">
+    <section class="section">
+        <div class="game-header">
+            <a class="btn" href="/Steam/Catalog">← Back to Catalog</a>
+            @if (Model.IsUserAtLeastModerator)
+            {
+                <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
+                <a class="btn btn--edit" href="/Steam/DeleteGame/@Model.Id">Delete Game</a>
+            }
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="game-container">
+
+            <div class="game-image">
+                <img src="@Model.ImageUrl" alt="@Model.Title" />
+            </div>
+
+            <div class="game-info">
+                <h1 class="game-title">@Model.Title</h1>
+
+                <div class="game-meta">
+                    @foreach (var genre in Model.Genres)
+                    {
+                        <span class="game-genre">@genre</span>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.PublisherName))
+                    {
+                        <span class="game-publisher">@Model.PublisherName</span>
+                    }
+                </div>
+
+                <div class="game-price">
+                    @if (Model.Price > 0)
+                    {
+                        <span>$@Model.Price.ToString("0.00")</span>
+                    }
+                    else
+                    {
+                        <span class="free">Free</span>
+                    }
+                </div>
+
+                <div class="game-description">
+                    <h3>About this game</h3>
+                    <p>@Model.Description</p>
+                </div>
+
+                <div class="game-rating-summary">
+                    <div class="game-rating-score">
+                        @if (Model.AverageRating.HasValue)
+                        {
+                            <span>@Model.AverageRating.Value.ToString("0.0")</span>
+                            <small>/ 10</small>
+                        }
+                        else
+                        {
+                            <span>-</span>
+                            <small>/ 10</small>
+                        }
+                    </div>
+                    <div class="game-rating-details">
+                        <span>@Model.ReviewsCount reviews</span>
+                        <span>@Model.PositiveReviewsCount recommended</span>
+                    </div>
+                </div>
+
+                <div class="game-actions">
+                    <button class="btn btn--primary">Add to Cart</button>
+                    <button class="btn">Add to Wishlist</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Reviews</h2>
+
+        @if (Model.Reviews.Any())
+        {
+            <div id="reviews-panel">
+                @foreach (var review in Model.Reviews)
+                {
+                    <article class="review-item">
+                        <b>@review.AuthorName</b>
+                        <span class="review-rating">@review.Rating / 10</span>
+                        <div>@review.Text</div>
+                    </article>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="catalog-empty">
+                <h3>No reviews yet</h3>
+                <p>This game has not been reviewed.</p>
+            </div>
+        }
+    </section>
+</main>
