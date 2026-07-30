@@ -2,6 +2,7 @@
 using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Application.Dtos;
+using XYZ_shop.Domain.Entities;
 using XYZ_shop.Domain.HelperModels;
 
 namespace XYZ_shop.Application.Services
@@ -10,15 +11,18 @@ namespace XYZ_shop.Application.Services
     {
         private readonly IGameRepository _gameRepository;
         private readonly IGameGenreRepository _gameGenreRepository;
+        private readonly IPublisherRepository _publisherRepository;
         private readonly IGameMapper _gameMapper;
 
         public CatalogService(
             IGameRepository gameRepository,
             IGameGenreRepository gameGenreRepository,
+            IPublisherRepository publisherRepository,
             IGameMapper gameMapper)
         {
             _gameRepository = gameRepository;
             _gameGenreRepository = gameGenreRepository;
+            _publisherRepository = publisherRepository;
             _gameMapper = gameMapper;
         }
 
@@ -119,6 +123,60 @@ namespace XYZ_shop.Application.Services
                     })
                     .ToList(),
             };
+        }
+
+        public List<PublisherDto> GetPublishers()
+        {
+            return _publisherRepository.GetAll()
+                .OrderBy(p => p.Name)
+                .Select(p => new PublisherDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                })
+                .ToList();
+        }
+
+        public List<CatalogGenreDto> GetGameGenres()
+        {
+            return _gameGenreRepository.GetAll()
+                .OrderBy(g => g.Name)
+                .Select(g => new CatalogGenreDto
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                })
+                .ToList();
+        }
+
+        public void AddGame(AddGameDto game)
+        {
+            if (game == null)
+            {
+                throw new ArgumentNullException(nameof(game), "Game data cannot be null");
+            }
+
+            var gameEntity = new GameEntity
+            {
+                Title = game.Title,
+                Description = game.Description,
+                ImageUrl = game.ImageUrl,
+                Price = game.Price,
+                PublisherId = game.PublisherId,
+                GameGenres = new List<GameGenreEntity>(),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            if (game.SelectedGenreIds.Any())
+            {
+                var genres = _gameGenreRepository.GetByIds(game.SelectedGenreIds);
+                foreach (var genre in genres)
+                {
+                    gameEntity.GameGenres.Add(genre);
+                }
+            }
+
+            _gameRepository.Add(gameEntity);
         }
     }
 }
