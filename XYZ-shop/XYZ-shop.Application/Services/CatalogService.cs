@@ -125,7 +125,7 @@ namespace XYZ_shop.Application.Services
             };
         }
 
-        public List<PublisherDto> GetPublishers()
+        private List<PublisherDto> GetPublishers()
         {
             return _publisherRepository.GetAll()
                 .OrderBy(p => p.Name)
@@ -137,7 +137,7 @@ namespace XYZ_shop.Application.Services
                 .ToList();
         }
 
-        public List<CatalogGenreDto> GetGameGenres()
+        private List<CatalogGenreDto> GetGameGenres()
         {
             return _gameGenreRepository.GetAll()
                 .OrderBy(g => g.Name)
@@ -149,6 +149,30 @@ namespace XYZ_shop.Application.Services
                 .ToList();
         }
 
+        public GameFormOptionsDto GetGameFormOptions()
+        {
+            return new GameFormOptionsDto
+            {
+                Genres = GetGameGenres(),
+                Publishers = GetPublishers(),
+            };
+        }
+
+        public EditGameFormDto? GetEditGameForm(int id)
+        {
+            var game = _gameRepository.GetGameDetails(id);
+            if (game == null)
+            {
+                return null;
+            }
+
+            return new EditGameFormDto
+            {
+                Game = _gameMapper.ToEditDto(game),
+                Options = GetGameFormOptions(),
+            };
+        }
+
         public void AddGame(AddGameDto game)
         {
             if (game == null)
@@ -156,16 +180,7 @@ namespace XYZ_shop.Application.Services
                 throw new ArgumentNullException(nameof(game), "Game data cannot be null");
             }
 
-            var gameEntity = new GameEntity
-            {
-                Title = game.Title,
-                Description = game.Description,
-                ImageUrl = game.ImageUrl,
-                Price = game.Price,
-                PublisherId = game.PublisherId,
-                GameGenres = new List<GameGenreEntity>(),
-                CreatedAt = DateTime.UtcNow
-            };
+            var gameEntity = _gameMapper.ToEntity(game);
 
             if (game.SelectedGenreIds.Any())
             {
@@ -177,6 +192,31 @@ namespace XYZ_shop.Application.Services
             }
 
             _gameRepository.Add(gameEntity);
+        }
+
+        public void UpdateGame(EditGameDto gameDto)
+        {
+            var game = _gameRepository.GetGameDetails(gameDto.Id);
+
+            if (game == null)
+            {
+                throw new ArgumentException("Game not found");
+            }
+
+            _gameMapper.ApplyEdit(game, gameDto);
+
+            game.GameGenres.Clear();
+
+            if (gameDto.SelectedGenreIds.Any())
+            {
+                var genres = _gameGenreRepository.GetByIds(gameDto.SelectedGenreIds);
+                foreach (var genre in genres)
+                {
+                    game.GameGenres.Add(genre);
+                }
+            }
+
+            _gameRepository.Update(game);
         }
     }
 }

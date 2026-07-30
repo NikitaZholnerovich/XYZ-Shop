@@ -7,8 +7,9 @@ namespace XYZ_shop.Application.Abstractions.Services
         HomeCatalogDto GetGamesForHomePage();
         CatalogDto GetCatalog(CatalogFilterDto? filter = null);
         GameDetailsDto? GetGameDetails(int id);
+        GameFormOptionsDto GetGameFormOptions();
+        EditGameFormDto? GetEditGameForm(int id);
         void AddGame(AddGameDto game);
-        List<PublisherDto> GetPublishers();
-        List<CatalogGenreDto> GetGameGenres();
+        void UpdateGame(EditGameDto game);
     }
 }
