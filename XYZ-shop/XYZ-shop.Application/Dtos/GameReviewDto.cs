@@ -1,0 +1,15 @@
+namespace XYZ_shop.Application.Dtos
+{
+    public class GameReviewDto
+    {
+        public int Id { get; set; }
+        public string Text { get; set; } = string.Empty;
+        public int Rating { get; set; }
+        public bool IsRecommended { get; set; }
+        public string AuthorName { get; set; } = string.Empty;
+        public int AuthorId { get; set; }
+        public int GameId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
+    }
+}

@@ -75,5 +75,50 @@ namespace XYZ_shop.Application.Services
                 },
             };
         }
+
+        public GameDetailsDto? GetGameDetails(int id)
+        {
+            var game = _gameRepository.GetGameDetails(id);
+            if (game == null)
+            {
+                return null;
+            }
+
+            var reviews = game.GameReviews ?? new();
+
+            return new GameDetailsDto
+            {
+                Id = game.Id,
+                Title = game.Title,
+                Description = game.Description,
+                ImageUrl = game.ImageUrl,
+                Price = game.Price,
+                AverageRating = reviews.Any()
+                    ? Math.Round(reviews.Average(r => r.Rating), 1)
+                    : null,
+                ReviewsCount = reviews.Count,
+                PositiveReviewsCount = reviews.Count(r => r.Rating >= 7),
+                Genres = game.GameGenres?
+                    .Select(g => g.Name)
+                    .ToList() ?? new(),
+                PublisherName = game.Publisher?.Name,
+                PublisherId = game.PublisherId,
+                Reviews = reviews
+                    .OrderByDescending(r => r.CreatedAt)
+                    .Select(r => new GameReviewDto
+                    {
+                        Id = r.Id,
+                        GameId = r.GameId,
+                        Text = r.Text,
+                        Rating = r.Rating,
+                        IsRecommended = r.Rating >= 7,
+                        AuthorId = r.AuthorId,
+                        AuthorName = r.Author?.Login ?? "Unknown",
+                        CreatedAt = r.CreatedAt,
+                        ModifiedAt = r.ModifiedAt,
+                    })
+                    .ToList(),
+            };
+        }
     }
 }

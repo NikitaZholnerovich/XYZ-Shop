@@ -54,5 +54,20 @@ namespace XYZ_shop.Web.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult GameDetails(int id)
+        {
+            var game = _catalogService.GetGameDetails(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = _catalogViewModelMapper.ToViewModel(game);
+
+            return View(viewModel);
+        }
     }
 }
