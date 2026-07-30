@@ -1,0 +1,158 @@
+﻿
+@model CatalogViewModel
+@{
+    Layout = "_Layout";
+    var pagination = Model.PaginationMetadata;
+    var startPage = Math.Max(1, pagination.CurrentPage - 2);
+    var endPage = Math.Min(pagination.TotalPages, pagination.CurrentPage + 2);
+}
+<main class="page">
+    <section class="section">
+        <div class="catalog-header">
+            <h1 class="page-title">Catalog</h1>
+            <div class="catalog-actions">
+                <p><a class="btn" href="/Steam/Index">← Back to store</a></p>
+                @if (Model.IsUserAtLeastModerator)
+                {
+                    <a class="btn btn-primary" href="/Steam/AddGame">+ Add New Game</a>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Filter</h2>
+        <form method="get" asp-controller="Steam" asp-action="Catalog" class="catalog-filter">
+            <div class="form-group">
+                <label>Genre</label>
+                <select name="GenreId" class="form-control">
+                    <option value="">-- All genres --</option>
+                    @foreach (var genre in Model.GameGenres)
+                    {
+                        <option value="@genre.Value" selected="@(Model.Filter.GenreId?.ToString() == genre.Value ? "selected" : null)">
+                            @genre.Text
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Max price</label>
+                <input type="number" name="MaxPrice" step="0.01" class="form-control"
+                       value="@Model.Filter.MaxPrice" />
+            </div>
+
+            <div class="form-group">
+                <label>Sort by</label>
+                <select name="SortBy" class="form-control">
+                    <option value="">-- Default --</option>
+                    <option value="Title" selected="@(Model.Filter.SortBy == "Title" ? "selected" : null)">Title</option>
+                    <option value="Price" selected="@(Model.Filter.SortBy == "Price" ? "selected" : null)">Price</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Direction</label>
+                <select name="SortDirection" class="form-control">
+                    <option value="asc" selected="@(!string.Equals(Model.Filter.SortDirection, "desc", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Ascending</option>
+                    <option value="desc" selected="@(string.Equals(Model.Filter.SortDirection, "desc", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Descending</option>
+                </select>
+            </div>
+
+            <input type="hidden" name="PageSize" value="@Model.Filter.PageSize" />
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Apply</button>
+                <a href="/Steam/Catalog" class="btn">Reset</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">All games (@pagination.TotalCount)</h2>
+
+        @if (Model.Games.Any())
+        {
+            <div class="cards">
+                @foreach (var game in Model.Games)
+                {
+                    <article class="card">
+                        <div class="card-media">
+                            <img src="@game.ImageUrl" alt="@game.Title" />
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">@game.Title</h3>
+                            @if (game.Genres != null && game.Genres.Any())
+                            {
+                                <div class="feature-genres">
+                                    @foreach (var genre in game.Genres)
+                                    {
+                                        <span class="game-genre">@genre</span>
+                                    }
+                                </div>
+                            }
+                            <div class="card-footer">
+                                <span class="price">$@game.Price.ToString("0.00")</span>
+                                <div class="card-buttons">
+                                    <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">View</a>
+                                    <button class="btn-cart btn--small" type="button">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="catalog-empty">
+                <h3>No games found</h3>
+                <p>Try changing the filters.</p>
+            </div>
+        }
+
+        @if (pagination.TotalPages > 1)
+        {
+            <nav class="catalog-pagination" aria-label="Catalog pages">
+                @if (pagination.HasPreviousPage)
+                {
+                    <a class="btn"
+                       asp-controller="Steam"
+                       asp-action="Catalog"
+                       asp-route-GenreId="@Model.Filter.GenreId"
+                       asp-route-MaxPrice="@Model.Filter.MaxPrice"
+                       asp-route-SortBy="@Model.Filter.SortBy"
+                       asp-route-SortDirection="@Model.Filter.SortDirection"
+                       asp-route-Page="@(pagination.CurrentPage - 1)"
+                       asp-route-PageSize="@Model.Filter.PageSize">Prev</a>
+                }
+
+                @for (var pageNumber = startPage; pageNumber <= endPage; pageNumber++)
+                {
+                    <a class="btn @(pageNumber == pagination.CurrentPage ? "active" : "")"
+                       asp-controller="Steam"
+                       asp-action="Catalog"
+                       asp-route-GenreId="@Model.Filter.GenreId"
+                       asp-route-MaxPrice="@Model.Filter.MaxPrice"
+                       asp-route-SortBy="@Model.Filter.SortBy"
+                       asp-route-SortDirection="@Model.Filter.SortDirection"
+                       asp-route-Page="@pageNumber"
+                       asp-route-PageSize="@Model.Filter.PageSize">@pageNumber</a>
+                }
+
+                @if (pagination.HasNextPage)
+                {
+                    <a class="btn"
+                       asp-controller="Steam"
+                       asp-action="Catalog"
+                       asp-route-GenreId="@Model.Filter.GenreId"
+                       asp-route-MaxPrice="@Model.Filter.MaxPrice"
+                       asp-route-SortBy="@Model.Filter.SortBy"
+                       asp-route-SortDirection="@Model.Filter.SortDirection"
+                       asp-route-Page="@(pagination.CurrentPage + 1)"
+                       asp-route-PageSize="@Model.Filter.PageSize">Next</a>
+                }
+            </nav>
+        }
+    </section>
+</main>
