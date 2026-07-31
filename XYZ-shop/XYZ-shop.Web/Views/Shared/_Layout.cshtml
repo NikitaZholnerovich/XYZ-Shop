@@ -12,6 +12,7 @@
     @RenderSection("Scripts", required: false)
 </head>
 <body>
+    @inject XYZ_shop.Application.Abstractions.Services.IAuthService AuthService
     <div class="notifications"></div>
     <header class="site-header">
         <div class="topbar">
@@ -28,6 +29,16 @@
             </nav>
 
             <div class="topbar-actions">
+                @if (AuthService.IsAuthenticated())
+                {
+                    <span class="auth-user">@AuthService.GetUserName()</span>
+                    <a class="btn btn--small" href="/Auth/Logout">Logout</a>
+                }
+                else
+                {
+                    <a class="btn btn--small" href="/Auth/Login">Login</a>
+                    <a class="btn btn--small" href="/Auth/Registration">Register</a>
+                }
                 <form class="search">
                     <input name="q" type="search" placeholder="Search" />
                     <button type="submit">Search</button>

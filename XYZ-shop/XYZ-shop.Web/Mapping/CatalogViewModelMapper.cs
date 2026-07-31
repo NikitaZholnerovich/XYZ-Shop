@@ -1,3 +1,4 @@
+using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Application.Dtos;
 using XYZ_shop.Web.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,12 @@ namespace XYZ_shop.Web.Mapping
 {
     public class CatalogViewModelMapper : ICatalogViewModelMapper
     {
+        private readonly IAuthService _authService;
+
+        public CatalogViewModelMapper(IAuthService authService)
+        {
+            _authService = authService;
+        }
         public SteamHomeViewModel ToViewModel(HomeCatalogDto catalog)
         {
             return new SteamHomeViewModel
@@ -19,6 +26,7 @@ namespace XYZ_shop.Web.Mapping
         {
             return new CatalogViewModel
             {
+                IsUserAtLeastModerator = _authService.AtLeastModerator(),
                 Filter = new CatalogFilterViewModel
                 {
                     GenreId = catalog.Filter.GenreId,
@@ -127,6 +135,7 @@ namespace XYZ_shop.Web.Mapping
         {
             return new GameDetailsViewModel
             {
+                IsUserAtLeastModerator = _authService.AtLeastModerator(),
                 Id = game.Id,
                 Title = game.Title,
                 Description = game.Description,

@@ -8,13 +8,11 @@
     <section class="section">
         <div class="game-header">
             <a class="btn" href="/Steam/Catalog">← Back to Catalog</a>
-            <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
-            <a class="btn btn--edit" href="/Steam/DeleteGame/@Model.Id">Delete Game</a>
-           @*  @if (Model.IsUserAtLeastModerator)
+            @if (Model.IsUserAtLeastModerator)
             {
                 <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
                 <a class="btn btn--edit" href="/Steam/DeleteGame/@Model.Id">Delete Game</a>
-            } *@
+            }
         </div>
     </section>
 
