@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Domain.Entities;
+using XYZ_shop.Domain.Enums;
 using XYZ_shop.Infrastructure.Data;
-using XYZ_shop.Infrastructure.Repositories;
 
 namespace XYZ_shop.Infrastructure.Repositories
 {
@@ -13,62 +12,55 @@ namespace XYZ_shop.Infrastructure.Repositories
 
         public UserEntity GetFirst()
         {
-            return _dbSet
-                .First();
+            return _dbSet.First();
         }
 
         public override void Add(UserEntity model)
         {
-            throw new NotImplementedException("You can create new user only by using method Registration");
+            throw new NotImplementedException("You can create new user only by using method Register");
         }
 
-        //public UserEntity? GetByNameAndPassword(string login, string password)
-        //{
-        //    var hash = GetHashOfPassword(password);
-        //    return _dbSet
-        //        .FirstOrDefault(x => x.Name == login && x.Password == hash);
-        //}
-
-        //public bool IsNameUniq(string login)
-        //{
-        //    return !_dbSet.Any(x => x.Name == login);
-        //}
-
-        //public void Registration(UserEntity user)
-        //{
-        //    var hash = GetHashOfPassword(user.Password);
-        //    user.Password = hash;
-        //    user.Role = Enums.UserRole.User;
-        //    user.Language = Enums.Language.English;
-
-        //    _dbSet.Add(user);
-        //    _context.SaveChanges();
-        //}
-
-        private string GetHashOfPassword(string password)
+        public UserEntity? GetByLogin(string login)
         {
-            // "Password"
-            // "Possword"
-            // "Posswor"
-
-            password = password.Replace("a", "o");
-            return password.Substring(0, password.Length - 1);
+            return _dbSet.FirstOrDefault(x => x.Login == login);
         }
 
-        //public void UpdateLanguage(int userId, Language language)
-        //{
-        //    var user = _dbSet.First(x => x.Id == userId);
-        //    user.Language = language;
-        //    _context.SaveChanges();
-        //}
+        public bool IsLoginUnique(string login)
+        {
+            return !_dbSet.Any(x => x.Login == login);
+        }
 
-        //public void UpdateProfile(UserData userData)
-        //{
-        //    var user = _dbSet.First(x => x.Id == userData.Id);
-        //    user.FirstName = userData.FirstName;
-        //    user.LastName = userData.LastName;
-        //    user.Mobilephone = userData.Mobilephone;
-        //    _context.SaveChanges();
-        //}
+        public void Register(UserEntity user)
+        {
+            user.Role = UserRole.User;
+            user.Language = Language.English;
+
+            _dbSet.Add(user);
+            _context.SaveChanges();
+        }
+
+        public void UpdateLanguage(int userId, Language language)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+            user.Language = language;
+            _context.SaveChanges();
+        }
+
+        public void UpdateProfile(UserEntity userData)
+        {
+            var user = _dbSet
+                .Include(u => u.UserProfile)
+                .First(x => x.Id == userData.Id);
+
+            if (user.UserProfile == null)
+            {
+                return;
+            }
+
+            user.UserProfile.FirstName = userData.UserProfile?.FirstName;
+            user.UserProfile.LastName = userData.UserProfile?.LastName;
+            user.UserProfile.Mobilephone = userData.UserProfile?.Mobilephone;
+            _context.SaveChanges();
+        }
     }
 }

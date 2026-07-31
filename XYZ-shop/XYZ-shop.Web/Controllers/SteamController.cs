@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Web.Mapping;
 using XYZ_shop.Web.Models;
@@ -69,7 +70,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpGet]
-        //[IsModerator]
+        [Authorize(Roles = "Moderator,Admin")]
         public IActionResult AddGame()
         {
             var viewModel = _catalogViewModelMapper.ToViewModel(_catalogService.GetGameFormOptions());
@@ -78,7 +79,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpPost]
-        //[IsModerator]
+        [Authorize(Roles = "Moderator,Admin")]
         public IActionResult AddGame(AddGameViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -93,7 +94,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpGet]
-        //[EditForCreatorWithRequiredRole]
+        [Authorize(Roles = "Moderator,Admin")]
         public IActionResult EditGame(int id)
         {
             var form = _catalogService.GetEditGameForm(id);
@@ -109,7 +110,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpPost]
-        //[EditForCreatorWithRequiredRole]
+        [Authorize(Roles = "Moderator,Admin")]
         public IActionResult EditGame(EditGameViewModel viewModel)
         {
             if (!ModelState.IsValid)

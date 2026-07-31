@@ -1,0 +1,30 @@
+﻿@using XYZ_shop.Web.Models.Auth
+@model LoginViewModel
+@{
+    Layout = "_Layout";
+}
+
+<main class="page">
+    <section class="section">
+        <h1 class="page-title">Login</h1>
+    </section>
+
+    <section class="section">
+        <form method="post" asp-controller="Auth" asp-action="Login">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Login, "Login")
+                @Html.ValidationMessageFor(x => x.Login)
+                @Html.TextBoxFor(x => x.Login, new { @class = "form-control", placeholder = "Login" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Password, "Password")
+                @Html.ValidationMessageFor(x => x.Password)
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Login</button>
+                <a class="btn" href="/Auth/Registration">Register</a>
+            </div>
+        </form>
+    </section>
+</main>
