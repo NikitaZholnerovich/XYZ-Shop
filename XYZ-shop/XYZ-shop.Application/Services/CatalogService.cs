@@ -218,5 +218,24 @@ namespace XYZ_shop.Application.Services
 
             _gameRepository.Update(game);
         }
+
+        public bool IsUserCreatorOfTheGame(int userId, int gameId)
+        {
+            var game = _gameRepository.Get(gameId);
+
+            if (game == null)
+            {
+                throw new ArgumentException($"Game not found");
+            }
+
+            return userId == game.CreatedByUserId;
+        }
+
+        public DateTime? GetGameCreatedAt(int gameId)
+        {
+            var game = _gameRepository.Get(gameId);
+
+            return game?.CreatedAt;
+        }
     }
 }

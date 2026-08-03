@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XYZ_shop.Application.Abstractions.Services;
+using XYZ_shop.Web.CustomAuthAttributes;
 using XYZ_shop.Web.Mapping;
 using XYZ_shop.Web.Models;
 
 namespace XYZ_shop.Web.Controllers
 {
+    [Authorize]
     public class SteamController : Controller
     {
         private const int CatalogDefaultPageSize = 12;
@@ -22,6 +24,7 @@ namespace XYZ_shop.Web.Controllers
             _catalogViewModelMapper = catalogViewModelMapper;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var catalog = _catalogService.GetGamesForHomePage();
@@ -31,6 +34,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Catalog([FromQuery] CatalogFilterViewModel filter)
         {
             filter ??= new CatalogFilterViewModel();
@@ -55,6 +59,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GameDetails(int id)
         {
             var game = _catalogService.GetGameDetails(id);
@@ -94,6 +99,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpGet]
+        [EditForCreatorWithRequiredRole]
         [Authorize(Roles = "Moderator,Admin")]
         public IActionResult EditGame(int id)
         {
@@ -110,6 +116,7 @@ namespace XYZ_shop.Web.Controllers
         }
 
         [HttpPost]
+        [EditForCreatorWithRequiredRole]
         [Authorize(Roles = "Moderator,Admin")]
         public IActionResult EditGame(EditGameViewModel viewModel)
         {
