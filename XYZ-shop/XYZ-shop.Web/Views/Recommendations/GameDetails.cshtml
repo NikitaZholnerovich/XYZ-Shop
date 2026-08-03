@@ -1,0 +1,153 @@
+﻿@model RecommendationsViewModel
+@{
+    ViewData["Title"] = Model.SelectedGame?.Name ?? "Game Details";
+}
+
+<div class="game-details-page">
+    @if (Model.SelectedGame != null)
+    {
+        <div class="game-details-header">
+            <div class="game-details-back">
+                <a href="/Steam/Recommendations" class="back-link">← Back to Recommendations</a>
+            </div>
+        </div>
+
+        <div class="game-details-container">
+            <div class="game-details-image">
+                @if (!string.IsNullOrEmpty(Model.SelectedGame.ImageUrl))
+                {
+                    <img src="@Model.SelectedGame.ImageUrl" alt="@Model.SelectedGame.Name" />
+                }
+                else
+                {
+                    <div class="no-image">No image available</div>
+                }
+            </div>
+
+            <div class="game-details-info">
+                <h1 class="game-details-title">@Model.SelectedGame.Name</h1>
+
+                <div class="game-details-meta">
+                    @if (Model.SelectedGame.Rating.HasValue)
+                    {
+                        <span class="meta-item rating">
+                            @Model.SelectedGame.Rating.Value.ToString("0.0")
+                        </span>
+                    }
+                    @if (Model.SelectedGame.Released.HasValue)
+                    {
+                        <span class="meta-item">
+                            @Model.SelectedGame.Released.Value.ToString("yyyy")
+                        </span>
+                    }
+                    @if (Model.SelectedGame.Metacritic.HasValue)
+                    {
+                        <span class="meta-item metacritic">
+                            Metacritic: @Model.SelectedGame.Metacritic
+                        </span>
+                    }
+                    @if (Model.SelectedGame.Playtime.HasValue && Model.SelectedGame.Playtime.Value > 0)
+                    {
+                        <span class="meta-item">
+                            @Model.SelectedGame.Playtime hours
+                        </span>
+                    }
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.SelectedGame.GenreSummary))
+                {
+                    <div class="game-details-genres">
+                        <strong>Genres:</strong> @Model.SelectedGame.GenreSummary
+                    </div>
+                }
+
+                @if (Model.SelectedGame.Publishers != null && Model.SelectedGame.Publishers.Any())
+                {
+                    <div class="game-details-publishers">
+                        <strong>Publishers:</strong> @string.Join(", ", Model.SelectedGame.Publishers.Select(p => p.Name))
+                    </div>
+                }
+
+                @if (Model.SelectedGame.Developers != null && Model.SelectedGame.Developers.Any())
+                {
+                    <div class="game-details-developers">
+                        <strong>Developers:</strong> @string.Join(", ", Model.SelectedGame.Developers.Select(d => d.Name))
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.SelectedGame.Website))
+                {
+                    <div class="game-details-website">
+                        <a href="@Model.SelectedGame.Website" target="_blank" rel="noopener noreferrer">
+                            Visit Official Website
+                        </a>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.SelectedGame.DescriptionRaw) || !string.IsNullOrEmpty(Model.SelectedGame.Description))
+                {
+                    var description = Model.SelectedGame.DescriptionRaw ?? Model.SelectedGame.Description;
+                    <div class="game-details-description">
+                        <h3>About this game</h3>
+                        <p>@Html.Raw(description)</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (Model.GameSeries != null && Model.GameSeries.Any())
+        {
+            <section class="game-series-section">
+                <h2 class="section-title">Games in this series</h2>
+                <div class="games-grid">
+                    @foreach (var game in Model.GameSeries)
+                    {
+                        <a href="/Steam/Recommendations/Game/@game.Slug" class="game-card">
+                            <div class="game-card-image">
+                                @if (!string.IsNullOrEmpty(game.ImageUrl))
+                                {
+                                    <img src="@game.ImageUrl" alt="@game.Name" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="no-image">No image</div>
+                                }
+                            </div>
+                            <div class="game-card-body">
+                                <h3 class="game-card-title">@game.Name</h3>
+                                <div class="game-card-meta">
+                                    @if (game.Rating.HasValue)
+                                    {
+                                        <span class="game-card-rating">⭐ @game.Rating.Value.ToString("0.0")</span>
+                                    }
+                                    @if (game.Released.HasValue)
+                                    {
+                                        <span class="game-card-year">@game.Released.Value.ToString("yyyy")</span>
+                                    }
+                                </div>
+                                @if (!string.IsNullOrEmpty(game.GenreSummary))
+                                {
+                                    <div class="game-card-genres">@game.GenreSummary</div>
+                                }
+                            </div>
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+        else
+        {
+            <div class="no-series">
+                <p>This game doesn't have any other games in its series.</p>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="error-message">
+            <h2>Game not found</h2>
+            <p>The requested game could not be found.</p>
+            <a href="/Steam/Recommendations" class="btn btn-primary">Back to Recommendations</a>
+        </div>
+    }
+</div>
