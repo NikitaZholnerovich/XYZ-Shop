@@ -7,6 +7,7 @@ using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Application.Mapping;
 using XYZ_shop.Application.Services;
+using XYZ_shop.Infrastructure.Apis;
 using XYZ_shop.Infrastructure.Data;
 using XYZ_shop.Infrastructure.Repositories;
 using XYZ_shop.Infrastructure.Security;
@@ -70,6 +71,11 @@ builder.Services.AddScoped<ICatalogViewModelMapper, CatalogViewModelMapper>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+builder.Services.AddHttpClient<IRawgApi, RawgApi>(client =>
+{
+    client.BaseAddress = new Uri("https://api.rawg.io/api/");
+});
 
 builder.Services.AddHttpContextAccessor();
 

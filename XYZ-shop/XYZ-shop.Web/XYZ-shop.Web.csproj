@@ -28,4 +28,8 @@
     <ProjectReference Include="..\XYZ-shop.Infrastructure\XYZ-shop.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\ApiControllers\" />
+  </ItemGroup>
+
 </Project>

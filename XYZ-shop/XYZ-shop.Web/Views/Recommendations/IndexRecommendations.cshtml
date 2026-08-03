@@ -1,0 +1,224 @@
+﻿@model RecommendationsViewModel
+@{
+    ViewData["Title"] = "Game Recommendations";
+}
+
+<div class="recommendations-page">
+    <header class="recommendations-header">
+        <h1>Game Recommendations</h1>
+        <p>Discover games you might enjoy</p>
+    </header>
+
+    <form method="get" class="recommendations-search">
+        <input type="search"
+               name="searchQuery"
+               placeholder="Search for a game..."
+               value="@Model.SearchQuery" />
+        <button type="submit">Search</button>
+    </form>
+
+    @if (!string.IsNullOrWhiteSpace(Model.SearchQuery))
+    {
+        if (Model.SearchResults.Any())
+        {
+            <section class="recommendations-section">
+                <h2>Results for "@Model.SearchQuery"</h2>
+
+                @if (Model.SelectedGame != null && Model.GameSeries.Any())
+                {
+                    var description = Model.SelectedGame.DescriptionRaw ?? Model.SelectedGame.Description ?? string.Empty;
+                    if (description.Length > 180)
+                    {
+                        description = description[..180] + "...";
+                    }
+
+                    <div class="selected-game">
+                        <div class="selected-game-image">
+                            @if (!string.IsNullOrEmpty(Model.SelectedGame.ImageUrl))
+                            {
+                                <img src="@Model.SelectedGame.ImageUrl" alt="@Model.SelectedGame.Name" />
+                            }
+                            else
+                            {
+                                <div class="no-image">No image</div>
+                            }
+                        </div>
+                        <div class="selected-game-info">
+                            <h2 class="selected-game-name">@Model.SelectedGame.Name</h2>
+                            <div class="selected-game-meta">
+                                @if (Model.SelectedGame.Rating.HasValue)
+                                {
+                                    <span class="rating">Rating @Model.SelectedGame.Rating.Value.ToString("0.0")</span>
+                                }
+                                @if (Model.SelectedGame.Released.HasValue)
+                                {
+                                    <span>@Model.SelectedGame.Released.Value.ToString("yyyy")</span>
+                                }
+                                @if (Model.SelectedGame.Metacritic.HasValue)
+                                {
+                                    <span>Metacritic @Model.SelectedGame.Metacritic</span>
+                                }
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.SelectedGame.GenreSummary))
+                            {
+                                <p class="selected-game-genres">@Model.SelectedGame.GenreSummary</p>
+                            }
+                            @if (!string.IsNullOrEmpty(description))
+                            {
+                                <p class="selected-game-description">@description</p>
+                            }
+                        </div>
+                    </div>
+
+                    <h2 class="section-subtitle">Games in series</h2>
+                    <div class="games-grid">
+                        @foreach (var game in Model.GameSeries)
+                        {
+                            <a href="/Steam/Recommendations/Game/@game.Slug" class="game-card">
+                                <div class="game-card-image">
+                                    @if (!string.IsNullOrEmpty(game.ImageUrl))
+                                    {
+                                        <img src="@game.ImageUrl" alt="@game.Name" loading="lazy" />
+                                    }
+                                    else
+                                    {
+                                        <div class="no-image">No image</div>
+                                    }
+                                </div>
+                                <div class="game-card-body">
+                                    <h3 class="game-card-title">@game.Name</h3>
+                                    <div class="game-card-meta">
+                                        @if (game.Rating.HasValue)
+                                        {
+                                            <span class="game-card-rating">@game.Rating.Value.ToString("0.0")</span>
+                                        }
+                                        @if (!string.IsNullOrEmpty(game.GenreSummary))
+                                        {
+                                            <span class="game-card-genres">@game.GenreSummary</span>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="games-grid">
+                        @foreach (var game in Model.SearchResults)
+                        {
+                            <a href="/Steam/Recommendations/Game/@game.Slug" class="game-card">
+                                <div class="game-card-image">
+                                    @if (!string.IsNullOrEmpty(game.ImageUrl))
+                                    {
+                                        <img src="@game.ImageUrl" alt="@game.Name" loading="lazy" />
+                                    }
+                                    else
+                                    {
+                                        <div class="no-image">No image</div>
+                                    }
+                                </div>
+                                <div class="game-card-body">
+                                    <h3 class="game-card-title">@game.Name</h3>
+                                    <div class="game-card-meta">
+                                        @if (game.Rating.HasValue)
+                                        {
+                                            <span class="game-card-rating">@game.Rating.Value.ToString("0.0")</span>
+                                        }
+                                        @if (!string.IsNullOrEmpty(game.GenreSummary))
+                                        {
+                                            <span class="game-card-genres">@game.GenreSummary</span>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+            </section>
+        }
+        else
+        {
+            <div class="no-results">
+                <h3>No games found</h3>
+                <p>Try a different search term.</p>
+            </div>
+        }
+    }
+    else
+    {
+        @if (Model.PopularGames.Any())
+        {
+            <section class="recommendations-section">
+                <h2>Popular games</h2>
+                <div class="games-grid">
+                    @foreach (var game in Model.PopularGames)
+                    {
+                        <a href="/Steam/Recommendations/Game/@game.Slug" class="game-card">
+                            <div class="game-card-image">
+                                @if (!string.IsNullOrEmpty(game.ImageUrl))
+                                {
+                                    <img src="@game.ImageUrl" alt="@game.Name" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="no-image">No image</div>
+                                }
+                            </div>
+                            <div class="game-card-body">
+                                <h3 class="game-card-title">@game.Name</h3>
+                                <div class="game-card-meta">
+                                    @if (game.Rating.HasValue)
+                                    {
+                                        <span class="game-card-rating">@game.Rating.Value.ToString("0.0")</span>
+                                    }
+                                    @if (!string.IsNullOrEmpty(game.GenreSummary))
+                                    {
+                                        <span class="game-card-genres">@game.GenreSummary</span>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+
+        @if (Model.NewReleases.Any())
+        {
+            <section class="recommendations-section">
+                <h2>New releases</h2>
+                <div class="games-grid">
+                    @foreach (var game in Model.NewReleases)
+                    {
+                        <a href="/Steam/Recommendations/Game/@game.Slug" class="game-card">
+                            <div class="game-card-image">
+                                @if (!string.IsNullOrEmpty(game.ImageUrl))
+                                {
+                                    <img src="@game.ImageUrl" alt="@game.Name" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="no-image">No image</div>
+                                }
+                            </div>
+                            <div class="game-card-body">
+                                <h3 class="game-card-title">@game.Name</h3>
+                                <div class="game-card-meta">
+                                    @if (game.Rating.HasValue)
+                                    {
+                                        <span class="game-card-rating">@game.Rating.Value.ToString("0.0")</span>
+                                    }
+                                    @if (!string.IsNullOrEmpty(game.GenreSummary))
+                                    {
+                                        <span class="game-card-genres">@game.GenreSummary</span>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+    }
+</div>
