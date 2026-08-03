@@ -133,6 +133,8 @@ namespace XYZ_shop.Web.Mapping
 
         public GameDetailsViewModel ToViewModel(GameDetailsDto game)
         {
+            var userId = _authService.IsAuthenticated() ? _authService.GetUserId() : 0;
+
             return new GameDetailsViewModel
             {
                 IsUserAtLeastModerator = _authService.AtLeastModerator(),
@@ -147,6 +149,7 @@ namespace XYZ_shop.Web.Mapping
                 Genres = game.Genres,
                 PublisherName = game.PublisherName,
                 PublisherId = game.PublisherId,
+                HasUserReviewed = userId > 0 && game.Reviews.Any(r => r.AuthorId == userId),
                 Reviews = game.Reviews
                     .Select(r => new GameReviewViewModel
                     {

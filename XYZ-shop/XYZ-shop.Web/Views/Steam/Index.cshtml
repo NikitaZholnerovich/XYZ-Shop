@@ -10,38 +10,53 @@
 
     <section class="section">
         <h2 class="section-title">Featured</h2>
-        @foreach (var game in Model.Featured)
-        {
-            <article class="feature-card">
-                <div class="feature-media" aria-hidden="true">
-                    <img src=@game.ImageUrl alt="Game Title cover" />
-                </div>
-
-                <div class="feature-content">
-                    <h3 class="feature-title">@game.Title</h3>
-                    @if (game.Genres != null && game.Genres.Any())
+        <div class="carousel-container">
+            <div class="carousel-wrapper" id="featuredCarousel">
+                <div class="carousel-track">
+                    @foreach (var game in Model.Featured)
                     {
-                        <div class="feature-genres">
-                            @foreach (var genre in game.Genres)
-                            {
-                                <span class="game-genre">@genre</span>
-                            }
-                        </div>
-                    }
-                    <p class="feature-text">
-                        @game.Description
-                    </p>
+                        <article class="feature-card">
+                            <div class="feature-media" aria-hidden="true">
+                                <img src=@game.ImageUrl alt="@game.Title cover" />
+                            </div>
 
-                    <div class="feature-footer">
-                        <span class="price">$@game.Price.ToString("0.00")</span>
-                        <div class="feature-buttons">
-                            <a class="btn" href="/Steam/GameDetails/@game.Id">View</a>
-                            <button class="btn-cart" type="button">Add to Cart</button>
-                        </div>
-                    </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">@game.Title</h3>
+                                @if (game.Genres != null && game.Genres.Any())
+                                {
+                                    <div class="feature-genres">
+                                        @foreach (var genre in game.Genres)
+                                        {
+                                            <span class="game-genre">@genre</span>
+                                        }
+                                    </div>
+                                }
+                                <p class="feature-text">
+                                    @game.Description
+                                </p>
+
+                                <div class="feature-footer">
+                                    <span class="price">$@game.Price.ToString("0.00")</span>
+                                    <div class="feature-buttons">
+                                        <a class="btn" href="/Steam/GameDetails/@game.Id">View</a>
+                                        <button class="btn-cart" type="button">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    }
                 </div>
-            </article>
-        }
+            </div>
+            <div class="carousel-dots" id="featuredDots">
+                @{
+                    var featuredCount = Model.Featured?.Count() ?? 0;
+                }
+                @for (var i = 0; i < featuredCount; i++)
+                {
+                    <button type="button" class="dot @(i == 0 ? "active" : null)" aria-label="Slide @(i + 1)"></button>
+                }
+            </div>
+        </div>
     </section>
 
     <section class="section">
@@ -84,6 +99,6 @@
     </section>
 </main>
 
-@* @section Scripts {
-    <script src="~/js/steam/main-carousel.js" asp-append-version="true"></script>
-} *@
+@section Scripts {
+    <script src="~/js/main-carousel.js" asp-append-version="true"></script>
+}

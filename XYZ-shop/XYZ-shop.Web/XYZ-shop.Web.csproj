@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\ApiControllers\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
 
 </Project>
