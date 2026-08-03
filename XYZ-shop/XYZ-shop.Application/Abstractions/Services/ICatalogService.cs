@@ -11,5 +11,7 @@ namespace XYZ_shop.Application.Abstractions.Services
         EditGameFormDto? GetEditGameForm(int id);
         void AddGame(AddGameDto game);
         void UpdateGame(EditGameDto game);
+        bool IsUserCreatorOfTheGame(int userId, int gameId);
+        DateTime? GetGameCreatedAt(int gameId);
     }
 }
