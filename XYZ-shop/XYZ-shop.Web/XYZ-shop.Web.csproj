@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="CustomValidationAttributes\MaxPriceAttribute.cs" />
+    <Content Include="CustomValidationAttributes\NoSpecialCharactersAttribute.cs" />
+    <Content Include="CustomValidationAttributes\UniqueGameTitleAttribute.cs" />
+    <Content Include="CustomValidationAttributes\ValidateImageUrlAttribute.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.25">
       <PrivateAssets>all</PrivateAssets>
