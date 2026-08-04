@@ -1,0 +1,33 @@
+﻿@model XYZ_shop.Web.Models.CommunityChatViewModel
+@{
+    Layout = "_Layout";
+}
+
+@section Scripts {
+    <script src="~/js/community-chat.js" asp-append-version="true"></script>
+}
+
+<main class="chat-page">
+    <div class="chat-header">
+        <h3>Community Chat</h3>
+    </div>
+
+    <div class="messages" data-current-user-id="@Model.CurrentUserId">
+        @foreach (var message in Model.ChatMessages)
+        {
+            var sideClass = message.IsOwnMessage ? "message-own" : "message-other";
+            <div class="message @sideClass">
+                <img class="message-avatar" src="@message.AvatarUrl" alt="" />
+                <div class="message-body">
+                    <div class="message-author">@message.UserName</div>
+                    <div class="message-text">@message.Message</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" id="messageInput" class="chat-input" placeholder="Write a message..." />
+        <button id="sendButton" class="chat-send-btn">Send</button>
+    </div>
+</main>
