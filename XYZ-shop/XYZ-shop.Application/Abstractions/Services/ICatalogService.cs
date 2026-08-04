@@ -13,5 +13,6 @@ namespace XYZ_shop.Application.Abstractions.Services
         void UpdateGame(EditGameDto game);
         bool IsUserCreatorOfTheGame(int userId, int gameId);
         DateTime? GetGameCreatedAt(int gameId);
+        void DeleteGame(int id);
     }
 }

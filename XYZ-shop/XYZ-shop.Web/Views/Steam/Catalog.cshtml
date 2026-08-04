@@ -6,6 +6,9 @@
     var startPage = Math.Max(1, pagination.CurrentPage - 2);
     var endPage = Math.Min(pagination.TotalPages, pagination.CurrentPage + 2);
 }
+@section Scripts {
+    <script src="~/js/catalog-delete-game.js"></script>
+}
 <main class="page">
     <section class="section">
         <div class="catalog-header">
@@ -61,6 +64,14 @@
             <div class="form-actions">
                 <button type="submit" class="btn btn--primary">Apply</button>
                 <a href="/Steam/Catalog" class="btn">Reset</a>
+                @if (Model.IsUserAtLeastModerator)
+                {
+                    <button type="button"
+                            class="remove-game-card btn"
+                            disabled>
+                        Delete game
+                    </button>
+                }
             </div>
         </form>
     </section>
@@ -73,7 +84,7 @@
             <div class="cards">
                 @foreach (var game in Model.Games)
                 {
-                    <article class="card">
+                    <article class="card" data-id="@game.Id">
                         <div class="card-media">
                             <img src="@game.ImageUrl" alt="@game.Title" />
                         </div>
