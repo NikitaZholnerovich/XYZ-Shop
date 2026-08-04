@@ -31,7 +31,15 @@
             <div class="topbar-actions">
                 @if (AuthService.IsAuthenticated())
                 {
-                    <span class="auth-user">@AuthService.GetUserName()</span>
+                    var avatarUrl = AuthService.GetUser()?.AvatarUrl;
+                    if (string.IsNullOrWhiteSpace(avatarUrl))
+                    {
+                        avatarUrl = "/images/default-avatar.png";
+                    }
+                    <a class="user-info" href="/Profile">
+                        <img class="user-avatar-small" src="@avatarUrl" alt="" />
+                        <span class="auth-user">@AuthService.GetUserName()</span>
+                    </a>
                     <a class="btn btn--small" href="/Auth/Logout">Logout</a>
                 }
                 else

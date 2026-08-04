@@ -59,10 +59,17 @@ namespace XYZ_shop.Web.Controllers.ApiControllers
 
             _gameReviewRepository.Add(review);
 
+            var avatarUrl = _authService.GetUser()?.AvatarUrl;
+            if (string.IsNullOrWhiteSpace(avatarUrl))
+            {
+                avatarUrl = "/images/default-avatar.png";
+            }
+
             return Ok(new AddGameReviewApiResponse
             {
                 IsSuccess = true,
                 Author = _authService.GetUserName()!,
+                AuthorAvatarUrl = avatarUrl,
                 Text = review.Text,
                 Rating = review.Rating,
                 CreatedAt = review.CreatedAt

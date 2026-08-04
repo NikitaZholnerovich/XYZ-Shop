@@ -64,11 +64,15 @@
                 rating: rating
             }),
             success: function (review) {
+                const avatarUrl = review.authorAvatarUrl || '/images/default-avatar.png';
                 $('#reviews-empty').hide();
                 $('#reviews-panel').prepend(`
                     <article class="review-item">
-                        <b>${escapeHtml(review.author)}</b>
-                        <span class="review-rating">${escapeHtml(String(review.rating))} / 10</span>
+                        <div class="review-item-header">
+                            <img class="user-avatar-small" src="${escapeHtml(avatarUrl)}" alt="" />
+                            <b>${escapeHtml(review.author)}</b>
+                            <span class="review-rating">${escapeHtml(String(review.rating))} / 10</span>
+                        </div>
                         <div>${escapeHtml(review.text)}</div>
                     </article>
                 `);
