@@ -1,0 +1,63 @@
+@using XYZ_shop.Web.Models.Profile
+@model ProfileViewModel
+@{
+    Layout = "_Layout";
+}
+
+<main class="page">
+    <section class="section">
+        <h1 class="page-title">Profile</h1>
+    </section>
+
+    <section class="section">
+        <form method="post" asp-controller="Profile" asp-action="Index" enctype="multipart/form-data">
+            <div class="profile-avatar-block">
+                <img class="profile-avatar-preview" src="@Model.AvatarUrl" alt="Avatar" />
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Avatar)
+                    @Html.ValidationMessageFor(x => x.Avatar)
+                    <input type="file" name="Avatar" id="Avatar" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp,image/*" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Login)
+                @Html.TextBoxFor(x => x.Login, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Email)
+                @Html.ValidationMessageFor(x => x.Email)
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.FirstName)
+                @Html.ValidationMessageFor(x => x.FirstName)
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = "First name" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.LastName)
+                @Html.ValidationMessageFor(x => x.LastName)
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = "Last name" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Mobilephone)
+                @Html.ValidationMessageFor(x => x.Mobilephone)
+                @Html.TextBoxFor(x => x.Mobilephone, new { @class = "form-control", placeholder = "Phone" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.BirthDate)
+                @Html.ValidationMessageFor(x => x.BirthDate)
+                @Html.TextBoxFor(x => x.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Save</button>
+            </div>
+        </form>
+    </section>
+</main>

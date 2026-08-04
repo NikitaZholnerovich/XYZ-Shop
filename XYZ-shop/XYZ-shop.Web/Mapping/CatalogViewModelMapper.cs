@@ -160,6 +160,7 @@ namespace XYZ_shop.Web.Mapping
                         IsRecommended = r.IsRecommended,
                         AuthorId = r.AuthorId,
                         AuthorName = r.AuthorName,
+                        AuthorAvatarUrl = r.AuthorAvatarUrl,
                         CreatedAt = r.CreatedAt,
                         ModifiedAt = r.ModifiedAt,
                     })

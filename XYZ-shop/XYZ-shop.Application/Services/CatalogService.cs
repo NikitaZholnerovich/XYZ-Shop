@@ -118,6 +118,7 @@ namespace XYZ_shop.Application.Services
                         IsRecommended = r.Rating >= 7,
                         AuthorId = r.AuthorId,
                         AuthorName = r.Author?.Login ?? "Unknown",
+                        AuthorAvatarUrl = r.Author?.AvatarUrl,
                         CreatedAt = r.CreatedAt,
                         ModifiedAt = r.ModifiedAt,
                     })

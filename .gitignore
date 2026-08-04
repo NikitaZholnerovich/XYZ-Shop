@@ -424,8 +424,9 @@ FodyWeavers.xsd
 #Local files of github agents
 .github/
 
-# Ignore steam user avatars
-**/wwwroot/images/steam/avatars/
+# Ignore user-uploaded avatars
+**/wwwroot/images/avatars/*
+!**/wwwroot/images/avatars/.gitkeep
 
 # User Secrets
 secrets.json

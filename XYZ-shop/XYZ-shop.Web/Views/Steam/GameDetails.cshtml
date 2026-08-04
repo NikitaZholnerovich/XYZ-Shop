@@ -112,9 +112,15 @@
         <div id="reviews-panel">
             @foreach (var review in Model.Reviews)
             {
+                var avatarUrl = string.IsNullOrWhiteSpace(review.AuthorAvatarUrl)
+                    ? "/images/default-avatar.png"
+                    : review.AuthorAvatarUrl;
                 <article class="review-item">
-                    <b>@review.AuthorName</b>
-                    <span class="review-rating">@review.Rating / 10</span>
+                    <div class="review-item-header">
+                        <img class="user-avatar-small" src="@avatarUrl" alt="" />
+                        <b>@review.AuthorName</b>
+                        <span class="review-rating">@review.Rating / 10</span>
+                    </div>
                     <div>@review.Text</div>
                 </article>
             }

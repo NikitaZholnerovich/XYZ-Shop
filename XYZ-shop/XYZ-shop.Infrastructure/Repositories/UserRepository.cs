@@ -25,6 +25,13 @@ namespace XYZ_shop.Infrastructure.Repositories
             return _dbSet.FirstOrDefault(x => x.Login == login);
         }
 
+        public UserEntity? GetWithProfile(int id)
+        {
+            return _dbSet
+                .Include(u => u.UserProfile)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         public bool IsLoginUnique(string login)
         {
             return !_dbSet.Any(x => x.Login == login);
@@ -54,12 +61,31 @@ namespace XYZ_shop.Infrastructure.Repositories
 
             if (user.UserProfile == null)
             {
-                return;
+                user.UserProfile = new UserProfileEntity
+                {
+                    Email = userData.UserProfile?.Email ?? string.Empty,
+                    FirstName = userData.UserProfile?.FirstName,
+                    LastName = userData.UserProfile?.LastName,
+                    Mobilephone = userData.UserProfile?.Mobilephone,
+                    BirthDate = userData.UserProfile?.BirthDate,
+                    CreatedAt = DateTime.UtcNow,
+                };
+            }
+            else
+            {
+                user.UserProfile.Email = userData.UserProfile?.Email ?? user.UserProfile.Email;
+                user.UserProfile.FirstName = userData.UserProfile?.FirstName;
+                user.UserProfile.LastName = userData.UserProfile?.LastName;
+                user.UserProfile.Mobilephone = userData.UserProfile?.Mobilephone;
+                user.UserProfile.BirthDate = userData.UserProfile?.BirthDate;
+                user.UserProfile.ModifiedAt = DateTime.UtcNow;
             }
 
-            user.UserProfile.FirstName = userData.UserProfile?.FirstName;
-            user.UserProfile.LastName = userData.UserProfile?.LastName;
-            user.UserProfile.Mobilephone = userData.UserProfile?.Mobilephone;
+            if (userData.AvatarUrl != null)
+            {
+                user.AvatarUrl = userData.AvatarUrl;
+            }
+
             _context.SaveChanges();
         }
     }
