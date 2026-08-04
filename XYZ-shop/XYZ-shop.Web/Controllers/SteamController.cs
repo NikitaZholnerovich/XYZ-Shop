@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XYZ_shop.Application.Abstractions.Services;
+using XYZ_shop.Application.Services;
 using XYZ_shop.Domain.Enums;
 using XYZ_shop.Web.CustomAuthAttributes;
 using XYZ_shop.Web.Mapping;
@@ -16,13 +17,19 @@ namespace XYZ_shop.Web.Controllers
 
         private readonly ICatalogService _catalogService;
         private readonly ICatalogViewModelMapper _catalogViewModelMapper;
+        private readonly IChatService _chatService;
+        private readonly IAuthService _authService;
 
         public SteamController(
             ICatalogService catalogService,
-            ICatalogViewModelMapper catalogViewModelMapper)
+            ICatalogViewModelMapper catalogViewModelMapper,
+            IChatService chatService,
+            IAuthService authService)
         {
             _catalogService = catalogService;
             _catalogViewModelMapper = catalogViewModelMapper;
+            _chatService = chatService;
+            _authService = authService;
         }
 
         [AllowAnonymous]
@@ -138,6 +145,18 @@ namespace XYZ_shop.Web.Controllers
         {
             _catalogService.DeleteGame(id);
             return RedirectToAction(nameof(Catalog));
+        }
+
+        [HttpGet]
+        public IActionResult CommunityChat()
+        {
+            var model = new CommunityChatViewModel
+            {
+                ChatMessages = _chatService.GetMessages(),
+                CurrentUserId = _authService.GetUserId()
+            };
+
+            return View(model);
         }
     }
 }

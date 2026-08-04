@@ -12,9 +12,13 @@ using XYZ_shop.Infrastructure.Data;
 using XYZ_shop.Infrastructure.Repositories;
 using XYZ_shop.Infrastructure.Security;
 using XYZ_shop.Web.Auth;
+using XYZ_shop.Web.Hubs;
 using XYZ_shop.Web.Mapping;
+using XYZ_shop.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
 
 builder.Services.AddControllersWithViews();
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
@@ -69,6 +73,8 @@ builder.Services.AddScoped<IGameMapper, GameMapper>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddScoped<ICatalogViewModelMapper, CatalogViewModelMapper>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IChatNotifier, ChatNotifier>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
@@ -97,6 +103,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<CommunityChatHub>("/steam/community-chat");
 
 app.MapControllers();
 app.MapControllerRoute(
