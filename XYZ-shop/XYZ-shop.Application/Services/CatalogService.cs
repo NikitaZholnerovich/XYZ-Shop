@@ -237,5 +237,17 @@ namespace XYZ_shop.Application.Services
 
             return game?.CreatedAt;
         }
+
+        public void DeleteGame(int id)
+        {
+            var game = _gameRepository.Get(id);
+
+            if (game == null)
+            {
+                throw new ArgumentException($"Game not found");
+            }
+
+            _gameRepository.Remove(game);
+        }
     }
 }

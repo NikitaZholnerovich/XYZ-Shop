@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XYZ_shop.Application.Abstractions.Services;
+using XYZ_shop.Domain.Enums;
 using XYZ_shop.Web.CustomAuthAttributes;
 using XYZ_shop.Web.Mapping;
 using XYZ_shop.Web.Models;
@@ -129,6 +130,14 @@ namespace XYZ_shop.Web.Controllers
             _catalogService.UpdateGame(_catalogViewModelMapper.ToDto(viewModel));
 
             return RedirectToAction(nameof(GameDetails), new { id = viewModel.Id });
+        }
+
+        [HttpGet]
+        [DeleteWithRoleAndTimeRestriction(AllowedDaysForCreator = 7, RequiredRoleForCreator = UserRole.Moderator)]
+        public IActionResult DeleteGame(int id)
+        {
+            _catalogService.DeleteGame(id);
+            return RedirectToAction(nameof(Catalog));
         }
     }
 }
