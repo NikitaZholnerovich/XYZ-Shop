@@ -105,6 +105,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub<CommunityChatHub>("/steam/community-chat");
+app.MapHub<NotificationHub>("/steam/notification");
 
 app.MapControllers();
 app.MapControllerRoute(
