@@ -1,3 +1,4 @@
+@using XYZ_shop.Domain.Enums
 @using XYZ_shop.Web.Models.Profile
 @model ProfileViewModel
 @{
@@ -6,15 +7,15 @@
 
 <main class="page">
     <section class="section">
-        <h1 class="page-title">Profile</h1>
+        <h1 class="page-title">@ProfilePage.Title</h1>
     </section>
 
     <section class="section">
         <form method="post" asp-controller="Profile" asp-action="Index" enctype="multipart/form-data">
             <div class="profile-avatar-block">
-                <img class="profile-avatar-preview" src="@Model.AvatarUrl" alt="Avatar" />
+                <img class="profile-avatar-preview" src="@Model.AvatarUrl" alt="@ProfilePage.Avatar" />
                 <div class="form-group">
-                    @Html.LabelFor(x => x.Avatar)
+                    <label for="Avatar">@ProfilePage.Avatar</label>
                     @Html.ValidationMessageFor(x => x.Avatar)
                     <input type="file" name="Avatar" id="Avatar" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp,image/*" />
                 </div>
@@ -26,37 +27,45 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.Email)
+                <label for="Email">@ProfilePage.Email</label>
                 @Html.ValidationMessageFor(x => x.Email)
-                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email" })
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = ProfilePage.Email })
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.FirstName)
+                <label for="FirstName">@ProfilePage.First_Name</label>
                 @Html.ValidationMessageFor(x => x.FirstName)
-                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = "First name" })
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = ProfilePage.First_Name })
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.LastName)
+                <label for="LastName">@ProfilePage.Last_Name</label>
                 @Html.ValidationMessageFor(x => x.LastName)
-                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = "Last name" })
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = ProfilePage.Last_Name })
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.Mobilephone)
+                <label for="Mobilephone">@ProfilePage.Phone</label>
                 @Html.ValidationMessageFor(x => x.Mobilephone)
-                @Html.TextBoxFor(x => x.Mobilephone, new { @class = "form-control", placeholder = "Phone" })
+                @Html.TextBoxFor(x => x.Mobilephone, new { @class = "form-control", placeholder = ProfilePage.Phone })
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.BirthDate)
+                <label for="BirthDate">@ProfilePage.Birth_Date</label>
                 @Html.ValidationMessageFor(x => x.BirthDate)
                 @Html.TextBoxFor(x => x.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
             </div>
 
+            <div class="form-group">
+                <label for="Language">@ProfilePage.Language</label>
+                <select name="Language" id="Language" class="form-control">
+                    <option value="@((int)Language.English)" selected="@(Model.Language == Language.English ? "selected" : null)">@ProfilePage.English</option>
+                    <option value="@((int)Language.Russian)" selected="@(Model.Language == Language.Russian ? "selected" : null)">@ProfilePage.Russian</option>
+                </select>
+            </div>
+
             <div class="form-actions">
-                <button type="submit" class="btn btn--primary">Save</button>
+                <button type="submit" class="btn btn--primary">@ProfilePage.Save</button>
             </div>
         </form>
     </section>

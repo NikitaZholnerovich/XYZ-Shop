@@ -5,11 +5,11 @@
 }
 <main class="page">
     <section class="section">
-        <h1 class="page-title">Store</h1>
+        <h1 class="page-title">@MainPage.Title</h1>
     </section>
 
     <section class="section">
-        <h2 class="section-title">Featured</h2>
+        <h2 class="section-title">@MainPage.Featured</h2>
         <div class="carousel-container">
             <div class="carousel-wrapper" id="featuredCarousel">
                 <div class="carousel-track">
@@ -38,8 +38,8 @@
                                 <div class="feature-footer">
                                     <span class="price">$@game.Price.ToString("0.00")</span>
                                     <div class="feature-buttons">
-                                        <a class="btn" href="/Steam/GameDetails/@game.Id">View</a>
-                                        <button class="btn-cart" type="button">Add to Cart</button>
+                                        <a class="btn" href="/Steam/GameDetails/@game.Id">@MainPage.View</a>
+                                        <button class="btn-cart" type="button">@MainPage.Add_To_Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
     </section>
 
     <section class="section">
-        <h2 class="section-title">Special Offers</h2>
+        <h2 class="section-title">@MainPage.Special_Offers</h2>
 
         <div class="cards">
             @foreach (var game in Model.SpecialOffers)
@@ -83,8 +83,8 @@
                         <div class="card-footer">
                             <span class="price">$@game.Price.ToString("0.00")</span>
                             <div class="card-buttons">
-                                <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">View</a>
-                                <button class="btn-cart btn--small" type="button">Add to Cart</button>
+                                <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">@MainPage.View</a>
+                                <button class="btn-cart btn--small" type="button">@MainPage.Add_To_Cart</button>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
     </section>
     <section class="section">
         <div>
-            <a class="btn catalog-button" href="/Steam/Catalog">Catalog</a>
+            <a class="btn catalog-button" href="/Steam/Catalog">@MainPage.Catalog</a>
         </div>
     </section>
 </main>

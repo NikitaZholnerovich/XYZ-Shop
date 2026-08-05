@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Back_To_Recommendations" xml:space="preserve"><value>Назад к рекомендациям</value></data>
+  <data name="No_Image" xml:space="preserve"><value>Нет изображения</value></data>
+  <data name="Genres" xml:space="preserve"><value>Жанры</value></data>
+  <data name="Publishers" xml:space="preserve"><value>Издатели</value></data>
+  <data name="Developers" xml:space="preserve"><value>Разработчики</value></data>
+  <data name="Visit_Official_Website" xml:space="preserve"><value>Официальный сайт</value></data>
+  <data name="About_This_Game" xml:space="preserve"><value>Об этой игре</value></data>
+  <data name="Games_In_This_Series" xml:space="preserve"><value>Игры этой серии</value></data>
+  <data name="No_Series" xml:space="preserve"><value>У этой игры нет других игр в серии.</value></data>
+  <data name="Game_Not_Found" xml:space="preserve"><value>Игра не найдена</value></data>
+  <data name="Could_Not_Be_Found" xml:space="preserve"><value>Запрошенная игра не найдена.</value></data>
+  <data name="Hours" xml:space="preserve"><value>ч</value></data>
+</root>

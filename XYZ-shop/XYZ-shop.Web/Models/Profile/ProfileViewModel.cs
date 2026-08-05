@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using XYZ_shop.Domain.Enums;
 using XYZ_shop.Web.CustomValidationAttributes;
 
 namespace XYZ_shop.Web.Models.Profile
@@ -7,6 +8,8 @@ namespace XYZ_shop.Web.Models.Profile
     public class ProfileViewModel
     {
         public string Login { get; set; } = string.Empty;
+
+        public Language Language { get; set; } = Language.English;
 
         [Required]
         [EmailAddress]

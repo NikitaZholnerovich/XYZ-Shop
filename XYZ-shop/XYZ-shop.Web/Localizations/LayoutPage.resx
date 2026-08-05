@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Nav_Steam" xml:space="preserve"><value>Steam</value></data>
+  <data name="Nav_Catalog" xml:space="preserve"><value>Catalog</value></data>
+  <data name="Nav_CommunityChat" xml:space="preserve"><value>CommunityChat</value></data>
+  <data name="Nav_Recommendations" xml:space="preserve"><value>Recommendations</value></data>
+  <data name="Nav_About" xml:space="preserve"><value>About</value></data>
+  <data name="Logout" xml:space="preserve"><value>Logout</value></data>
+  <data name="Login" xml:space="preserve"><value>Login</value></data>
+  <data name="Register" xml:space="preserve"><value>Register</value></data>
+  <data name="Search_Placeholder" xml:space="preserve"><value>Search</value></data>
+  <data name="Search_Button" xml:space="preserve"><value>Search</value></data>
+  <data name="Footer_About_Company" xml:space="preserve"><value>About Company</value></data>
+  <data name="Footer_Jobs" xml:space="preserve"><value>Jobs</value></data>
+  <data name="Footer_Steamworks" xml:space="preserve"><value>Steamworks</value></data>
+  <data name="Footer_Support" xml:space="preserve"><value>Support</value></data>
+  <data name="Footer_Privacy_Policy" xml:space="preserve"><value>Privacy Policy</value></data>
+  <data name="Footer_Legal" xml:space="preserve"><value>Legal</value></data>
+  <data name="Footer_Copyright" xml:space="preserve"><value>© 2026 Nikita Corporation. All rights reserved. All trademarks are property of their respective owners.</value></data>
+</root>

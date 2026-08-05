@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Domain.Entities;
+using XYZ_shop.Domain.Enums;
+using XYZ_shop.Web.Auth;
 using XYZ_shop.Web.Models.Profile;
 
 namespace XYZ_shop.Web.Controllers
@@ -15,15 +17,18 @@ namespace XYZ_shop.Web.Controllers
 
         private readonly IAuthService _authService;
         private readonly IUserRepository _userRepository;
+        private readonly IJwtTokenService _jwtTokenService;
         private readonly IWebHostEnvironment _environment;
 
         public ProfileController(
             IAuthService authService,
             IUserRepository userRepository,
+            IJwtTokenService jwtTokenService,
             IWebHostEnvironment environment)
         {
             _authService = authService;
             _userRepository = userRepository;
+            _jwtTokenService = jwtTokenService;
             _environment = environment;
         }
 
@@ -53,7 +58,17 @@ namespace XYZ_shop.Web.Controllers
             {
                 viewModel.Login = user.Login;
                 viewModel.AvatarUrl = ResolveAvatarUrl(user.AvatarUrl);
+                if (!Enum.IsDefined(typeof(Language), viewModel.Language))
+                {
+                    viewModel.Language = user.Language;
+                }
+
                 return View(viewModel);
+            }
+
+            if (!Enum.IsDefined(typeof(Language), viewModel.Language))
+            {
+                viewModel.Language = user.Language;
             }
 
             string? newAvatarUrl = null;
@@ -76,6 +91,14 @@ namespace XYZ_shop.Web.Controllers
                 }
             });
 
+            if (viewModel.Language is Language.English or Language.Russian
+                && viewModel.Language != user.Language)
+            {
+                _userRepository.UpdateLanguage(userId, viewModel.Language);
+                user.Language = viewModel.Language;
+                _jwtTokenService.WriteTokenToCookie(user);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -84,6 +107,7 @@ namespace XYZ_shop.Web.Controllers
             return new ProfileViewModel
             {
                 Login = user.Login,
+                Language = user.Language,
                 Email = user.UserProfile?.Email ?? string.Empty,
                 FirstName = user.UserProfile?.FirstName,
                 LastName = user.UserProfile?.LastName,

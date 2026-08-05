@@ -6,24 +6,24 @@
 
 <main class="page">
     <section class="section">
-        <h1 class="page-title">Login</h1>
+        <h1 class="page-title">@AuthPage.Login_Title</h1>
     </section>
 
     <section class="section">
         <form method="post" asp-controller="Auth" asp-action="Login">
             <div class="form-group">
-                @Html.LabelFor(x => x.Login, "Login")
+                @Html.LabelFor(x => x.Login, AuthPage.Login)
                 @Html.ValidationMessageFor(x => x.Login)
-                @Html.TextBoxFor(x => x.Login, new { @class = "form-control", placeholder = "Login" })
+                @Html.TextBoxFor(x => x.Login, new { @class = "form-control", placeholder = AuthPage.Login })
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.Password, "Password")
+                @Html.LabelFor(x => x.Password, AuthPage.Password)
                 @Html.ValidationMessageFor(x => x.Password)
-                @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = AuthPage.Password })
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn--primary">Login</button>
-                <a class="btn" href="/Auth/Registration">Register</a>
+                <button type="submit" class="btn btn--primary">@AuthPage.Login_Title</button>
+                <a class="btn" href="/Auth/Registration">@AuthPage.Register</a>
             </div>
         </form>
     </section>

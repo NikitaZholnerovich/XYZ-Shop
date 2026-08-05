@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Back_To_Recommendations" xml:space="preserve"><value>Back to Recommendations</value></data>
+  <data name="No_Image" xml:space="preserve"><value>No image available</value></data>
+  <data name="Genres" xml:space="preserve"><value>Genres</value></data>
+  <data name="Publishers" xml:space="preserve"><value>Publishers</value></data>
+  <data name="Developers" xml:space="preserve"><value>Developers</value></data>
+  <data name="Visit_Official_Website" xml:space="preserve"><value>Visit Official Website</value></data>
+  <data name="About_This_Game" xml:space="preserve"><value>About this game</value></data>
+  <data name="Games_In_This_Series" xml:space="preserve"><value>Games in this series</value></data>
+  <data name="No_Series" xml:space="preserve"><value>This game doesn't have any other games in its series.</value></data>
+  <data name="Game_Not_Found" xml:space="preserve"><value>Game not found</value></data>
+  <data name="Could_Not_Be_Found" xml:space="preserve"><value>The requested game could not be found.</value></data>
+  <data name="Hours" xml:space="preserve"><value>hours</value></data>
+</root>
