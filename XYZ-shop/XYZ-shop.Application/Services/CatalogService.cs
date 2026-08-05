@@ -97,11 +97,9 @@ namespace XYZ_shop.Application.Services
                 Description = game.Description,
                 ImageUrl = game.ImageUrl,
                 Price = game.Price,
-                AverageRating = reviews.Any()
-                    ? Math.Round(reviews.Average(r => r.Rating), 1)
-                    : null,
-                ReviewsCount = reviews.Count,
-                PositiveReviewsCount = reviews.Count(r => r.Rating >= 7),
+                AverageRating = game.AverageRating,
+                ReviewsCount = game.ReviewsCount ?? 0,
+                PositiveReviewsCount = game.PositiveReviewsCount ?? 0,
                 Genres = game.GameGenres?
                     .Select(g => g.Name)
                     .ToList() ?? new(),

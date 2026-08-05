@@ -12,6 +12,7 @@ namespace XYZ_shop.Application.Abstractions.Repositories
         public DataModel? Get(int id);
         public void Update(DataModel model);
         public void Update(List<DataModel> models);
+        void SaveChanges();
         public void Delete(int id);
         void DeleteRange(List<DataModel> models);
         public bool Any();

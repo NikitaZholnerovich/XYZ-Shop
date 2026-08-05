@@ -83,6 +83,11 @@ namespace XYZ_shop.Infrastructure.Repositories
             _context.SaveChanges();
         }
 
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+
         public void DeleteRange(List<DataModel> models)
         {
             _dbSet.RemoveRange(models);

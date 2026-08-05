@@ -177,6 +177,8 @@ namespace XYZ_shop.Web.Mapping
                 Description = game.Description,
                 ImageUrl = game.ImageUrl,
                 Price = game.Price,
+                AverageRating = game.AverageRating,
+                ReviewsCount = game.ReviewsCount,
                 Genres = game.Genres
             };
         }
