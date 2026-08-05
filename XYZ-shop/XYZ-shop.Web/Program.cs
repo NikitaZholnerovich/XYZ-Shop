@@ -83,6 +83,7 @@ builder.Services.AddHttpClient<IRawgApi, RawgApi>(client =>
     client.BaseAddress = new Uri("https://api.rawg.io/api/");
 });
 
+builder.Services.AddHostedService<RatingAnalyticsBackgroundService>();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();

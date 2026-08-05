@@ -15,6 +15,8 @@ namespace XYZ_shop.Application.Mapping
                 Description = game.Description,
                 ImageUrl = game.ImageUrl,
                 Price = game.Price,
+                AverageRating = game.AverageRating,
+                ReviewsCount = game.ReviewsCount ?? 0,
                 Genres = game.GameGenres.Select(genre => genre.Name).ToList()
             };
         }

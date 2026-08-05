@@ -15,6 +15,10 @@ namespace XYZ_shop.Domain.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
+        public double? AverageRating { get; set; }
+        public int? ReviewsCount { get; set; }
+        public int? PositiveReviewsCount { get; set; }
+
         public virtual PublisherEntity Publisher { get; set; }
         public virtual UserEntity CreatedByUser { get; set; }
         public virtual UserEntity ModifiedByUser { get; set; }
