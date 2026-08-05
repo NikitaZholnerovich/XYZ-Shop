@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using XYZ_shop.Application.Abstractions.Hubs;
 using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Application.Services;
 using XYZ_shop.Domain.Enums;
 using XYZ_shop.Web.CustomAuthAttributes;
+using XYZ_shop.Web.Hubs;
 using XYZ_shop.Web.Mapping;
 using XYZ_shop.Web.Models;
 
@@ -19,17 +22,20 @@ namespace XYZ_shop.Web.Controllers
         private readonly ICatalogViewModelMapper _catalogViewModelMapper;
         private readonly IChatService _chatService;
         private readonly IAuthService _authService;
+        private readonly IHubContext<NotificationHub, INotificationHub> _notificationHub;
 
         public SteamController(
             ICatalogService catalogService,
             ICatalogViewModelMapper catalogViewModelMapper,
             IChatService chatService,
-            IAuthService authService)
+            IAuthService authService,
+            IHubContext<NotificationHub, INotificationHub> notificationHub)
         {
             _catalogService = catalogService;
             _catalogViewModelMapper = catalogViewModelMapper;
             _chatService = chatService;
             _authService = authService;
+            _notificationHub = notificationHub;
         }
 
         [AllowAnonymous]
@@ -102,6 +108,7 @@ namespace XYZ_shop.Web.Controllers
             }
 
             _catalogService.AddGame(_catalogViewModelMapper.ToDto(viewModel));
+            _notificationHub.Clients.All.NewGameAdded(viewModel.Title, viewModel.ImageUrl);
 
             return RedirectToAction(nameof(Catalog));
         }
