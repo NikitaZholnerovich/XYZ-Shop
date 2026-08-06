@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using System.Globalization
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,11 +21,11 @@
 
             <nav class="primary-nav">
                 <ul class="nav-list">
-                    <li class="store-link"><a href="/Steam/Index">Steam</a></li>
-                    <li class="catalog-link"><a href="/Steam/Catalog">Catalog</a></li>
-                    <li class="community-chat-link"><a href="/Steam/CommunityChat">CommunityChat</a></li>
-                    <li><a href="/Steam/Recommendations">Recommendations</a></li>
-                    <li><a href="#">About</a></li>
+                    <li class="store-link"><a href="/Steam/Index">@LayoutPage.Nav_Steam</a></li>
+                    <li class="catalog-link"><a href="/Steam/Catalog">@LayoutPage.Nav_Catalog</a></li>
+                    <li class="community-chat-link"><a href="/Steam/CommunityChat">@LayoutPage.Nav_CommunityChat</a></li>
+                    <li><a href="/Steam/Recommendations">@LayoutPage.Nav_Recommendations</a></li>
+                    <li><a href="#">@LayoutPage.Nav_About</a></li>
                 </ul>
             </nav>
 
@@ -40,16 +41,16 @@
                         <img class="user-avatar-small" src="@avatarUrl" alt="" />
                         <span class="auth-user">@AuthService.GetUserName()</span>
                     </a>
-                    <a class="btn btn--small" href="/Auth/Logout">Logout</a>
+                    <a class="btn btn--small" href="/Auth/Logout">@LayoutPage.Logout</a>
                 }
                 else
                 {
-                    <a class="btn btn--small" href="/Auth/Login">Login</a>
-                    <a class="btn btn--small" href="/Auth/Registration">Register</a>
+                    <a class="btn btn--small" href="/Auth/Login">@LayoutPage.Login</a>
+                    <a class="btn btn--small" href="/Auth/Registration">@LayoutPage.Register</a>
                 }
                 <form class="search">
-                    <input name="q" type="search" placeholder="Search" />
-                    <button type="submit">Search</button>
+                    <input name="q" type="search" placeholder="@LayoutPage.Search_Placeholder" />
+                    <button type="submit">@LayoutPage.Search_Button</button>
                 </form>
             </div>
         </div>
@@ -64,18 +65,18 @@
             <div class="footer-top">
                 <div class="footer-logo">STEAM</div>
                 <div class="footer-links">
-                    <a href="#">About_Company</a>
-                    <a href="#">Jobs</a>
-                    <a href="#">Steamworks</a>
-                    <a href="#">Support</a>
-                    <a href="#">Privacy_Policy</a>
-                    <a href="#">Legal</a>
+                    <a href="#">@LayoutPage.Footer_About_Company</a>
+                    <a href="#">@LayoutPage.Footer_Jobs</a>
+                    <a href="#">@LayoutPage.Footer_Steamworks</a>
+                    <a href="#">@LayoutPage.Footer_Support</a>
+                    <a href="#">@LayoutPage.Footer_Privacy_Policy</a>
+                    <a href="#">@LayoutPage.Footer_Legal</a>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>
-                    © 2026 Nikita Corporation. All rights reserved. All trademarks are property of their respective owners.
+                    @LayoutPage.Footer_Copyright
                 </p>
             </div>
         </div>

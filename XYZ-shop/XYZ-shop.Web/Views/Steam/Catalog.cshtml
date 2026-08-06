@@ -12,21 +12,24 @@
 <main class="page">
     <section class="section">
         <div class="catalog-header">
-            <h1 class="page-title">Catalog</h1>
+            <h1 class="page-title">@CatalogPage.Title</h1>
             <div class="catalog-actions">
-                <p><a class="btn" href="/Steam/Index">← Back to store</a></p>
-                <a class="btn btn--primary" href="/Steam/AddGame">+ Add New Game</a>
+                <p><a class="btn" href="/Steam/Index">&larr; @CatalogPage.Back_To_Store_Button</a></p>
+                @if (Model.IsUserAtLeastModerator)
+                {
+                    <a class="btn btn--primary" href="/Steam/AddGame">+ @CatalogPage.Add_New_Game_Button</a>
+                }
             </div>
         </div>
     </section>
 
     <section class="section">
-        <h2 class="section-title">Filter</h2>
+        <h2 class="section-title">@CatalogPage.Filter</h2>
         <form method="get" asp-controller="Steam" asp-action="Catalog" class="catalog-filter">
             <div class="form-group">
-                <label>Genre</label>
+                <label>@CatalogPage.Genre</label>
                 <select name="GenreId" class="form-control">
-                    <option value="">-- All genres --</option>
+                    <option value="">@CatalogPage.All_Genres</option>
                     @foreach (var genre in Model.GameGenres)
                     {
                         <option value="@genre.Value" selected="@(Model.Filter.GenreId?.ToString() == genre.Value ? "selected" : null)">
@@ -37,39 +40,39 @@
             </div>
 
             <div class="form-group">
-                <label>Max price</label>
+                <label>@CatalogPage.Max_Price</label>
                 <input type="number" name="MaxPrice" step="0.01" class="form-control"
                        value="@Model.Filter.MaxPrice" />
             </div>
 
             <div class="form-group">
-                <label>Sort by</label>
+                <label>@CatalogPage.Sort_By</label>
                 <select name="SortBy" class="form-control">
-                    <option value="">-- Default --</option>
-                    <option value="Title" selected="@(Model.Filter.SortBy == "Title" ? "selected" : null)">Title</option>
-                    <option value="Price" selected="@(Model.Filter.SortBy == "Price" ? "selected" : null)">Price</option>
+                    <option value="">@CatalogPage.Default</option>
+                    <option value="Title" selected="@(Model.Filter.SortBy == "Title" ? "selected" : null)">@CatalogPage.Title_Sort</option>
+                    <option value="Price" selected="@(Model.Filter.SortBy == "Price" ? "selected" : null)">@CatalogPage.Price_Sort</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>Direction</label>
+                <label>@CatalogPage.Direction</label>
                 <select name="SortDirection" class="form-control">
-                    <option value="asc" selected="@(!string.Equals(Model.Filter.SortDirection, "desc", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Ascending</option>
-                    <option value="desc" selected="@(string.Equals(Model.Filter.SortDirection, "desc", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Descending</option>
+                    <option value="asc" selected="@(!string.Equals(Model.Filter.SortDirection, "desc", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">@CatalogPage.Ascending</option>
+                    <option value="desc" selected="@(string.Equals(Model.Filter.SortDirection, "desc", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">@CatalogPage.Descending</option>
                 </select>
             </div>
 
             <input type="hidden" name="PageSize" value="@Model.Filter.PageSize" />
 
             <div class="form-actions">
-                <button type="submit" class="btn btn--primary">Apply</button>
-                <a href="/Steam/Catalog" class="btn">Reset</a>
+                <button type="submit" class="btn btn--primary">@CatalogPage.Apply</button>
+                <a href="/Steam/Catalog" class="btn">@CatalogPage.Reset</a>
                 @if (Model.IsUserAtLeastModerator)
                 {
                     <button type="button"
                             class="remove-game-card btn"
                             disabled>
-                        Delete game
+                        @CatalogPage.Delete_Game
                     </button>
                 }
             </div>
@@ -77,7 +80,7 @@
     </section>
 
     <section class="section">
-        <h2 class="section-title">All games (@pagination.TotalCount)</h2>
+        <h2 class="section-title">@CatalogPage.All_Games (@pagination.TotalCount)</h2>
 
         @if (Model.Games.Any())
         {
@@ -102,8 +105,8 @@
                             <div class="card-footer">
                                 <span class="price">$@game.Price.ToString("0.00")</span>
                                 <div class="card-buttons">
-                                    <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">View</a>
-                                    <button class="btn-cart btn--small" type="button">Add to Cart</button>
+                                    <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">@CatalogPage.View</a>
+                                    <button class="btn-cart btn--small" type="button">@CatalogPage.Add_To_Cart</button>
                                 </div>
                             </div>
                         </div>
@@ -114,8 +117,8 @@
         else
         {
             <div class="catalog-empty">
-                <h3>No games found</h3>
-                <p>Try changing the filters.</p>
+                <h3>@CatalogPage.No_Games_Found</h3>
+                <p>@CatalogPage.Try_Changing_Filters</p>
             </div>
         }
 
@@ -132,7 +135,7 @@
                        asp-route-SortBy="@Model.Filter.SortBy"
                        asp-route-SortDirection="@Model.Filter.SortDirection"
                        asp-route-Page="@(pagination.CurrentPage - 1)"
-                       asp-route-PageSize="@Model.Filter.PageSize">Prev</a>
+                       asp-route-PageSize="@Model.Filter.PageSize">@CatalogPage.Prev</a>
                 }
 
                 @for (var pageNumber = startPage; pageNumber <= endPage; pageNumber++)
@@ -158,7 +161,7 @@
                        asp-route-SortBy="@Model.Filter.SortBy"
                        asp-route-SortDirection="@Model.Filter.SortDirection"
                        asp-route-Page="@(pagination.CurrentPage + 1)"
-                       asp-route-PageSize="@Model.Filter.PageSize">Next</a>
+                       asp-route-PageSize="@Model.Filter.PageSize">@CatalogPage.Next</a>
                 }
             </nav>
         }

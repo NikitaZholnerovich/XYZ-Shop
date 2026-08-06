@@ -12,11 +12,11 @@
 <main class="page">
     <section class="section">
         <div class="game-header">
-            <a class="btn" href="/Steam/Catalog">← Back to Catalog</a>
+            <a class="btn" href="/Steam/Catalog">&larr; @GameDetailsPage.Back_To_Catalog</a>
             @if (Model.IsUserAtLeastModerator)
             {
-                <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ Edit Game</a>
-                <a class="btn btn--edit" href="/Steam/DeleteGame/@Model.Id">Delete Game</a>
+                <a class="btn btn--edit" href="/Steam/EditGame/@Model.Id">✎ @GameDetailsPage.Edit_Game</a>
+                <a class="btn btn--edit" href="/Steam/DeleteGame/@Model.Id">@GameDetailsPage.Delete_Game</a>
             }
         </div>
     </section>
@@ -50,12 +50,12 @@
                     }
                     else
                     {
-                        <span class="free">Free</span>
+                        <span class="free">@GameDetailsPage.Free</span>
                     }
                 </div>
 
                 <div class="game-description">
-                    <h3>About this game</h3>
+                    <h3>@GameDetailsPage.About_This_Game</h3>
                     <p>@Model.Description</p>
                 </div>
 
@@ -73,40 +73,40 @@
                         }
                     </div>
                     <div class="game-rating-details">
-                        <span>@Model.ReviewsCount reviews</span>
-                        <span>@Model.PositiveReviewsCount recommended</span>
+                        <span>@Model.ReviewsCount @GameDetailsPage.Reviews</span>
+                        <span>@Model.PositiveReviewsCount @GameDetailsPage.Recommended</span>
                     </div>
                 </div>
 
                 <div class="game-actions">
-                    <button class="btn btn--primary">Add to Cart</button>
-                    <button class="btn">Add to Wishlist</button>
+                    <button class="btn btn--primary">@GameDetailsPage.Add_To_Cart</button>
+                    <button class="btn">@GameDetailsPage.Add_To_Wishlist</button>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="section">
-        <h2 class="section-title">Reviews</h2>
+        <h2 class="section-title">@GameDetailsPage.Reviews_Title</h2>
 
         @if (AuthService.IsAuthenticated() && !Model.HasUserReviewed)
         {
-            <button type="button" id="show-review-form-btn">Write a review</button>
+            <button type="button" id="show-review-form-btn">@GameDetailsPage.Write_A_Review</button>
             <div id="review-form-container" class="review-form-hidden">
                 <form id="review-form" data-game-id="@Model.Id">
-                    <textarea id="review-text" placeholder="Share your thoughts..." maxlength="5000" required></textarea>
-                    <input id="review-rating" type="number" min="1" max="10" placeholder="Rating" required />
+                    <textarea id="review-text" placeholder="@GameDetailsPage.Share_Your_Thoughts" maxlength="5000" required></textarea>
+                    <input id="review-rating" type="number" min="1" max="10" placeholder="@GameDetailsPage.Rating" required />
                     <div>
-                        <button type="submit">Submit</button>
-                        <button type="button" id="cancel-review-btn">Cancel</button>
+                        <button type="submit">@GameDetailsPage.Submit</button>
+                        <button type="button" id="cancel-review-btn">@GameDetailsPage.Cancel</button>
                     </div>
                 </form>
             </div>
         }
 
         <div id="reviews-empty" class="catalog-empty" style="@(Model.Reviews.Any() ? "display:none" : null)">
-            <h3>No reviews yet</h3>
-            <p>This game has not been reviewed.</p>
+            <h3>@GameDetailsPage.No_Reviews_Yet</h3>
+            <p>@GameDetailsPage.Not_Reviewed</p>
         </div>
 
         <div id="reviews-panel">

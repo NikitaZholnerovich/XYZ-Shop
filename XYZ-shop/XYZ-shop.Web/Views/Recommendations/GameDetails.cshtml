@@ -1,6 +1,6 @@
 ﻿@model RecommendationsViewModel
 @{
-    ViewData["Title"] = Model.SelectedGame?.Name ?? "Game Details";
+    ViewData["Title"] = Model.SelectedGame?.Name ?? RecommendationDetailsPage.Game_Not_Found;
 }
 
 <div class="game-details-page">
@@ -8,7 +8,7 @@
     {
         <div class="game-details-header">
             <div class="game-details-back">
-                <a href="/Steam/Recommendations" class="back-link">← Back to Recommendations</a>
+                <a href="/Steam/Recommendations" class="back-link">&larr; @RecommendationDetailsPage.Back_To_Recommendations</a>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                 }
                 else
                 {
-                    <div class="no-image">No image available</div>
+                    <div class="no-image">@RecommendationDetailsPage.No_Image</div>
                 }
             </div>
 
@@ -49,7 +49,7 @@
                     @if (Model.SelectedGame.Playtime.HasValue && Model.SelectedGame.Playtime.Value > 0)
                     {
                         <span class="meta-item">
-                            @Model.SelectedGame.Playtime hours
+                            @Model.SelectedGame.Playtime @RecommendationDetailsPage.Hours
                         </span>
                     }
                 </div>
@@ -57,21 +57,21 @@
                 @if (!string.IsNullOrEmpty(Model.SelectedGame.GenreSummary))
                 {
                     <div class="game-details-genres">
-                        <strong>Genres:</strong> @Model.SelectedGame.GenreSummary
+                        <strong>@RecommendationDetailsPage.Genres:</strong> @Model.SelectedGame.GenreSummary
                     </div>
                 }
 
                 @if (Model.SelectedGame.Publishers != null && Model.SelectedGame.Publishers.Any())
                 {
                     <div class="game-details-publishers">
-                        <strong>Publishers:</strong> @string.Join(", ", Model.SelectedGame.Publishers.Select(p => p.Name))
+                        <strong>@RecommendationDetailsPage.Publishers:</strong> @string.Join(", ", Model.SelectedGame.Publishers.Select(p => p.Name))
                     </div>
                 }
 
                 @if (Model.SelectedGame.Developers != null && Model.SelectedGame.Developers.Any())
                 {
                     <div class="game-details-developers">
-                        <strong>Developers:</strong> @string.Join(", ", Model.SelectedGame.Developers.Select(d => d.Name))
+                        <strong>@RecommendationDetailsPage.Developers:</strong> @string.Join(", ", Model.SelectedGame.Developers.Select(d => d.Name))
                     </div>
                 }
 
@@ -79,7 +79,7 @@
                 {
                     <div class="game-details-website">
                         <a href="@Model.SelectedGame.Website" target="_blank" rel="noopener noreferrer">
-                            Visit Official Website
+                            @RecommendationDetailsPage.Visit_Official_Website
                         </a>
                     </div>
                 }
@@ -88,7 +88,7 @@
                 {
                     var description = Model.SelectedGame.DescriptionRaw ?? Model.SelectedGame.Description;
                     <div class="game-details-description">
-                        <h3>About this game</h3>
+                        <h3>@RecommendationDetailsPage.About_This_Game</h3>
                         <p>@Html.Raw(description)</p>
                     </div>
                 }
@@ -98,7 +98,7 @@
         @if (Model.GameSeries != null && Model.GameSeries.Any())
         {
             <section class="game-series-section">
-                <h2 class="section-title">Games in this series</h2>
+                <h2 class="section-title">@RecommendationDetailsPage.Games_In_This_Series</h2>
                 <div class="games-grid">
                     @foreach (var game in Model.GameSeries)
                     {
@@ -110,7 +110,7 @@
                                 }
                                 else
                                 {
-                                    <div class="no-image">No image</div>
+                                    <div class="no-image">@RecommendationDetailsPage.No_Image</div>
                                 }
                             </div>
                             <div class="game-card-body">
@@ -138,16 +138,16 @@
         else
         {
             <div class="no-series">
-                <p>This game doesn't have any other games in its series.</p>
+                <p>@RecommendationDetailsPage.No_Series</p>
             </div>
         }
     }
     else
     {
         <div class="error-message">
-            <h2>Game not found</h2>
-            <p>The requested game could not be found.</p>
-            <a href="/Steam/Recommendations" class="btn btn-primary">Back to Recommendations</a>
+            <h2>@RecommendationDetailsPage.Game_Not_Found</h2>
+            <p>@RecommendationDetailsPage.Could_Not_Be_Found</p>
+            <a href="/Steam/Recommendations" class="btn btn-primary">@RecommendationDetailsPage.Back_To_Recommendations</a>
         </div>
     }
 </div>

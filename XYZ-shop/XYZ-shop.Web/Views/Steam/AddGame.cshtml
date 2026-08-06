@@ -4,26 +4,26 @@
 }
 <main class="page">
     <section class="section">
-        <h1 class="page-title">Add New Game</h1>
+        <h1 class="page-title">@AddGamePage.Title</h1>
         <div class="catalog-header">
-            <p><a class="btn" href="/Steam/Catalog">← Back to Catalog</a></p>
+            <p><a class="btn" href="/Steam/Catalog">&larr; @AddGamePage.Back_To_Catalog</a></p>
         </div>
     </section>
 
     <section class="section">
         <form method="post" asp-controller="Steam" asp-action="AddGame">
             <div class="form-group">
-                @Html.LabelFor(x => x.Title, "Title")
+                @Html.LabelFor(x => x.Title, AddGamePage.Label_Title)
                 @Html.ValidationMessageFor(x => x.Title)
                 @Html.TextBoxFor(x => x.Title, new {
                 @class = "form-control",
-                                placeholder = "Enter game title",
+                                placeholder = AddGamePage.Placeholder_Title,
                                 required = "required"
                                 })
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.ImageUrl, "Image URL")
+                @Html.LabelFor(x => x.ImageUrl, AddGamePage.Image_URL)
                 @Html.ValidationMessageFor(x => x.ImageUrl)
                 @Html.TextBoxFor(x => x.ImageUrl, new {
                                 @class = "form-control",
@@ -33,17 +33,17 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.Description, "Description")
+                @Html.LabelFor(x => x.Description, AddGamePage.Description)
                 @Html.ValidationMessageFor(x => x.Description)
                 @Html.TextAreaFor(x => x.Description, new {
                                 @class = "form-control",
                                 rows = "5",
-                                placeholder = "Enter game description"
+                                placeholder = AddGamePage.Placeholder_Description
                                 })
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.Price, "Price ($)")
+                @Html.LabelFor(x => x.Price, AddGamePage.Price)
                 @Html.ValidationMessageFor(x => x.Price)
                 @Html.TextBoxFor(x => x.Price, new {
                                 @class = "form-control",
@@ -55,7 +55,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.SelectedGenreIds, "Genres")
+                @Html.LabelFor(x => x.SelectedGenreIds, AddGamePage.Genres)
                 <select id="SelectedGenreIds" name="SelectedGenreIds" class="form-control" multiple required>
                     @foreach (var genre in Model.AllGenres)
                     {
@@ -64,13 +64,13 @@
                         </option>
                     }
                 </select>
-                <small class="form-text text-muted">Hold Ctrl to select multiple genres</small>
+                <small class="form-text text-muted">@AddGamePage.Hold_Ctrl</small>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.PublisherId, "Publisher")
+                @Html.LabelFor(x => x.PublisherId, AddGamePage.Publisher)
                 <select id="PublisherId" name="PublisherId" class="form-control">
-                    <option value="">Select publisher</option>
+                    <option value="">@AddGamePage.Select_Publisher</option>
                     @foreach (var publisher in Model.Publishers)
                     {
                         <option value="@publisher.Value" selected="@(Model.PublisherId.ToString() == publisher.Value ? "selected" : null)">
@@ -82,8 +82,8 @@
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn--primary">Save Game</button>
-                <a href="/Steam/Catalog" class="btn">Cancel</a>
+                <button type="submit" class="btn btn--primary">@AddGamePage.Save_Game</button>
+                <a href="/Steam/Catalog" class="btn">@AddGamePage.Cancel</a>
             </div>
         </form>
     </section>

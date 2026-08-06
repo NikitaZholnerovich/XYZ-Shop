@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Add New Game</value></data>
+  <data name="Back_To_Catalog" xml:space="preserve"><value>Back to Catalog</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Title</value></data>
+  <data name="Placeholder_Title" xml:space="preserve"><value>Enter game title</value></data>
+  <data name="Image_URL" xml:space="preserve"><value>Image URL</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Placeholder_Description" xml:space="preserve"><value>Enter game description</value></data>
+  <data name="Price" xml:space="preserve"><value>Price ($)</value></data>
+  <data name="Genres" xml:space="preserve"><value>Genres</value></data>
+  <data name="Hold_Ctrl" xml:space="preserve"><value>Hold Ctrl to select multiple genres</value></data>
+  <data name="Publisher" xml:space="preserve"><value>Publisher</value></data>
+  <data name="Select_Publisher" xml:space="preserve"><value>Select publisher</value></data>
+  <data name="Save_Game" xml:space="preserve"><value>Save Game</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+</root>

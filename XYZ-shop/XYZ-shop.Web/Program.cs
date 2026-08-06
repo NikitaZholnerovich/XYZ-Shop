@@ -14,6 +14,7 @@ using XYZ_shop.Infrastructure.Security;
 using XYZ_shop.Web.Auth;
 using XYZ_shop.Web.Hubs;
 using XYZ_shop.Web.Mapping;
+using XYZ_shop.Web.Middleware;
 using XYZ_shop.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -105,8 +106,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<LocalizationMiddleware>();
+
 app.MapHub<CommunityChatHub>("/steam/community-chat");
 app.MapHub<NotificationHub>("/steam/notification");
+
 
 app.MapControllers();
 app.MapControllerRoute(
