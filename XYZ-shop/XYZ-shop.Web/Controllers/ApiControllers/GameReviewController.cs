@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Application.Abstractions.Services;
