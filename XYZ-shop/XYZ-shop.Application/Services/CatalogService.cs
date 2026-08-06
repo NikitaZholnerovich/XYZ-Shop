@@ -258,5 +258,15 @@ namespace XYZ_shop.Application.Services
 
             _gameRepository.Remove(game);
         }
+
+        public void DeleteGames(List<int> gameIds)
+        {
+            if (gameIds == null || gameIds.Count == 0)
+            {
+                return;
+            }
+
+            _gameRepository.Delete(gameIds);
+        }
     }
 }

@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-
-using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Application.Abstractions.Services;
-using XYZ_shop.Domain.Entities;
+using XYZ_shop.Application.Dtos;
 using XYZ_shop.Web.Models.Api;
 using XYZ_shop.Web.Models.Api.GameReviewApi;
 
@@ -12,149 +10,84 @@ namespace XYZ_shop.Web.Controllers.ApiControllers
     [ApiController]
     public class GameReviewController : ControllerBase
     {
-        private readonly IGameReviewRepository _gameReviewRepository;
-        private readonly IAuthService _authService;
+        private readonly IGameReviewService _gameReviewService;
 
-        public GameReviewController(IGameReviewRepository reviews, IAuthService auth)
+        public GameReviewController(IGameReviewService gameReviewService)
         {
-            _gameReviewRepository = reviews;
-            _authService = auth;
+            _gameReviewService = gameReviewService;
         }
 
         [HttpPost]
         public IActionResult Add([FromBody] AddGameReviewRequest request)
         {
-            if (!_authService.IsAuthenticated())
+            var result = _gameReviewService.Add(new AddGameReviewDto
             {
-                return Unauthorized(new ErrorApiResponse("Login required."));
-            }
-
-            if (request == null || request.GameId <= 0 || request.Rating < 1 || request.Rating > 10)
-            {
-                return BadRequest(new ErrorApiResponse("Invalid data."));
-            }
-
-            var text = request.Text?.Trim();
-            if (string.IsNullOrWhiteSpace(text) || text.Length < 3 || text.Length > 5000)
-            {
-                return BadRequest(new ErrorApiResponse("Invalid data."));
-            }
-
-            var userId = _authService.GetUserId();
-
-            if (_gameReviewRepository.ExistsForUser(request.GameId, userId))
-            {
-                return Conflict(new ErrorApiResponse("You already reviewed this game."));
-            }
-
-            var review = new GameReviewEntity
-            {
-                GameId = request.GameId,
-                AuthorId = userId,
-                Text = text,
-                Rating = request.Rating,
-                CreatedAt = DateTime.UtcNow,
-                ModifiedAt = null
-            };
-
-            _gameReviewRepository.Add(review);
-
-            var avatarUrl = _authService.GetUser()?.AvatarUrl;
-            if (string.IsNullOrWhiteSpace(avatarUrl))
-            {
-                avatarUrl = "/images/default-avatar.png";
-            }
-
-            return Ok(new AddGameReviewApiResponse
-            {
-                IsSuccess = true,
-                Id = review.Id,
-                Author = _authService.GetUserName()!,
-                AuthorAvatarUrl = avatarUrl,
-                Text = review.Text,
-                Rating = review.Rating,
-                CreatedAt = review.CreatedAt
+                GameId = request?.GameId ?? 0,
+                Text = request?.Text ?? string.Empty,
+                Rating = request?.Rating ?? 0
             });
+
+            return result.Status switch
+            {
+                GameReviewOperationStatus.Unauthorized => Unauthorized(new ErrorApiResponse("Login required.")),
+                GameReviewOperationStatus.InvalidData => BadRequest(new ErrorApiResponse("Invalid data.")),
+                GameReviewOperationStatus.AlreadyExists => Conflict(new ErrorApiResponse("You already reviewed this game.")),
+                GameReviewOperationStatus.Success => Ok(new AddGameReviewApiResponse
+                {
+                    IsSuccess = true,
+                    Id = result.Review!.Id,
+                    Author = result.Review.AuthorName,
+                    AuthorAvatarUrl = result.Review.AuthorAvatarUrl ?? "/images/default-avatar.png",
+                    Text = result.Review.Text,
+                    Rating = result.Review.Rating,
+                    CreatedAt = result.Review.CreatedAt
+                }),
+                _ => BadRequest(new ErrorApiResponse("Invalid data."))
+            };
         }
 
         [HttpPost]
         public IActionResult Edit([FromBody] EditGameReviewRequest request)
         {
-            if (!_authService.IsAuthenticated())
+            var result = _gameReviewService.Edit(new EditGameReviewDto
             {
-                return Unauthorized(new ErrorApiResponse("Login required."));
-            }
-
-            if (request == null || request.Id <= 0 || request.Rating < 1 || request.Rating > 10)
-            {
-                return BadRequest(new ErrorApiResponse("Invalid data."));
-            }
-
-            var text = request.Text?.Trim();
-            if (string.IsNullOrWhiteSpace(text) || text.Length < 3 || text.Length > 5000)
-            {
-                return BadRequest(new ErrorApiResponse("Invalid data."));
-            }
-
-            var review = _gameReviewRepository.Get(request.Id);
-            if (review == null)
-            {
-                return NotFound(new ErrorApiResponse("Review not found."));
-            }
-
-            if (!CanManage(review))
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, new ErrorApiResponse("Not allowed."));
-            }
-
-            review.Text = text;
-            review.Rating = request.Rating;
-            review.ModifiedAt = DateTime.UtcNow;
-            _gameReviewRepository.Update(review);
-
-            return Ok(new EditGameReviewApiResponse
-            {
-                IsSuccess = true,
-                Id = review.Id,
-                Text = review.Text,
-                Rating = review.Rating,
-                ModifiedAt = review.ModifiedAt.Value
+                Id = request?.Id ?? 0,
+                Text = request?.Text ?? string.Empty,
+                Rating = request?.Rating ?? 0
             });
+
+            return result.Status switch
+            {
+                GameReviewOperationStatus.Unauthorized => Unauthorized(new ErrorApiResponse("Login required.")),
+                GameReviewOperationStatus.InvalidData => BadRequest(new ErrorApiResponse("Invalid data.")),
+                GameReviewOperationStatus.NotFound => NotFound(new ErrorApiResponse("Review not found.")),
+                GameReviewOperationStatus.Forbidden => StatusCode(StatusCodes.Status403Forbidden, new ErrorApiResponse("Not allowed.")),
+                GameReviewOperationStatus.Success => Ok(new EditGameReviewApiResponse
+                {
+                    IsSuccess = true,
+                    Id = result.Review!.Id,
+                    Text = result.Review.Text,
+                    Rating = result.Review.Rating,
+                    ModifiedAt = result.Review.ModifiedAt!.Value
+                }),
+                _ => BadRequest(new ErrorApiResponse("Invalid data."))
+            };
         }
 
         [HttpPost]
         public IActionResult Delete([FromBody] DeleteGameReviewRequest request)
         {
-            if (!_authService.IsAuthenticated())
+            var result = _gameReviewService.Delete(request?.Id ?? 0);
+
+            return result.Status switch
             {
-                return Unauthorized(new ErrorApiResponse("Login required."));
-            }
-
-            if (request == null || request.Id <= 0)
-            {
-                return BadRequest(new ErrorApiResponse("Invalid data."));
-            }
-
-            var review = _gameReviewRepository.Get(request.Id);
-            if (review == null)
-            {
-                return NotFound(new ErrorApiResponse("Review not found."));
-            }
-
-            if (!CanManage(review))
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, new ErrorApiResponse("Not allowed."));
-            }
-
-            _gameReviewRepository.Delete(request.Id);
-
-            return Ok(new SuccessApiResponse());
-        }
-
-        private bool CanManage(GameReviewEntity review)
-        {
-            return review.AuthorId == _authService.GetUserId()
-                || _authService.AtLeastModerator();
+                GameReviewOperationStatus.Unauthorized => Unauthorized(new ErrorApiResponse("Login required.")),
+                GameReviewOperationStatus.InvalidData => BadRequest(new ErrorApiResponse("Invalid data.")),
+                GameReviewOperationStatus.NotFound => NotFound(new ErrorApiResponse("Review not found.")),
+                GameReviewOperationStatus.Forbidden => StatusCode(StatusCodes.Status403Forbidden, new ErrorApiResponse("Not allowed.")),
+                GameReviewOperationStatus.Success => Ok(new SuccessApiResponse()),
+                _ => BadRequest(new ErrorApiResponse("Invalid data."))
+            };
         }
     }
 }

@@ -14,5 +14,6 @@ namespace XYZ_shop.Application.Abstractions.Services
         bool IsUserCreatorOfTheGame(int userId, int gameId);
         DateTime? GetGameCreatedAt(int gameId);
         void DeleteGame(int id);
+        void DeleteGames(List<int> gameIds);
     }
 }

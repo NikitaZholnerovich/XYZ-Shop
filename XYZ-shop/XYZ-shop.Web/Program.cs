@@ -73,6 +73,8 @@ builder.Services.AddScoped<IGameReviewRepository, GameReviewRepository>();
 builder.Services.AddScoped<ICommunityChatMessageRepository, CommunityChatMessageRepository>();
 builder.Services.AddScoped<IGameMapper, GameMapper>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IGameReviewService, GameReviewService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<ICatalogViewModelMapper, CatalogViewModelMapper>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IChatService, ChatService>();

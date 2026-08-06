@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Application.Abstractions.Services;
-using XYZ_shop.Domain.Entities;
+using XYZ_shop.Application.Dtos;
 using XYZ_shop.Domain.Enums;
 using XYZ_shop.Web.Auth;
 using XYZ_shop.Web.Models.Profile;
@@ -16,18 +15,18 @@ namespace XYZ_shop.Web.Controllers
         private readonly string _defaultAvatarUrl = "/images/default-avatar.png";
 
         private readonly IAuthService _authService;
-        private readonly IUserRepository _userRepository;
+        private readonly IProfileService _profileService;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IWebHostEnvironment _environment;
 
         public ProfileController(
             IAuthService authService,
-            IUserRepository userRepository,
+            IProfileService profileService,
             IJwtTokenService jwtTokenService,
             IWebHostEnvironment environment)
         {
             _authService = authService;
-            _userRepository = userRepository;
+            _profileService = profileService;
             _jwtTokenService = jwtTokenService;
             _environment = environment;
         }
@@ -35,85 +34,83 @@ namespace XYZ_shop.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var user = _userRepository.GetWithProfile(_authService.GetUserId());
-            if (user == null)
+            var profile = _profileService.GetProfile(_authService.GetUserId());
+            if (profile == null)
             {
                 return RedirectToAction("Login", "Auth");
             }
 
-            return View(ToViewModel(user));
+            return View(ToViewModel(profile));
         }
 
         [HttpPost]
         public IActionResult Index(ProfileViewModel viewModel)
         {
             var userId = _authService.GetUserId();
-            var user = _userRepository.GetWithProfile(userId);
-            if (user == null)
+            var existing = _profileService.GetProfile(userId);
+            if (existing == null)
             {
                 return RedirectToAction("Login", "Auth");
             }
 
             if (!ModelState.IsValid)
             {
-                viewModel.Login = user.Login;
-                viewModel.AvatarUrl = ResolveAvatarUrl(user.AvatarUrl);
+                viewModel.Login = existing.Login;
+                viewModel.AvatarUrl = ResolveAvatarUrl(existing.AvatarUrl);
                 if (!Enum.IsDefined(typeof(Language), viewModel.Language))
                 {
-                    viewModel.Language = user.Language;
+                    viewModel.Language = existing.Language;
                 }
 
                 return View(viewModel);
             }
 
-            if (!Enum.IsDefined(typeof(Language), viewModel.Language))
-            {
-                viewModel.Language = user.Language;
-            }
-
             string? newAvatarUrl = null;
             if (viewModel.Avatar != null && viewModel.Avatar.Length > 0)
             {
-                newAvatarUrl = SaveAvatar(userId, viewModel.Avatar, user.AvatarUrl);
+                newAvatarUrl = SaveAvatar(userId, viewModel.Avatar, existing.AvatarUrl);
             }
 
-            _userRepository.UpdateProfile(new UserEntity
+            var result = _profileService.UpdateProfile(userId, new UpdateProfileDto
             {
-                Id = userId,
-                AvatarUrl = newAvatarUrl,
-                UserProfile = new UserProfileEntity
-                {
-                    Email = viewModel.Email.Trim(),
-                    FirstName = viewModel.FirstName?.Trim(),
-                    LastName = viewModel.LastName?.Trim(),
-                    Mobilephone = viewModel.Mobilephone?.Trim(),
-                    BirthDate = viewModel.BirthDate,
-                }
+                Email = viewModel.Email,
+                FirstName = viewModel.FirstName,
+                LastName = viewModel.LastName,
+                Mobilephone = viewModel.Mobilephone,
+                BirthDate = viewModel.BirthDate,
+                Language = viewModel.Language,
+                NewAvatarUrl = newAvatarUrl,
             });
 
-            if (viewModel.Language is Language.English or Language.Russian
-                && viewModel.Language != user.Language)
+            if (!result.Success)
             {
-                _userRepository.UpdateLanguage(userId, viewModel.Language);
-                user.Language = viewModel.Language;
-                _jwtTokenService.WriteTokenToCookie(user);
+                return RedirectToAction("Login", "Auth");
+            }
+
+            if (result.LanguageChanged)
+            {
+                var user = _authService.GetUser();
+                if (user != null)
+                {
+                    _jwtTokenService.WriteTokenToCookie(user);
+                }
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        private ProfileViewModel ToViewModel(UserEntity user)
+        private ProfileViewModel ToViewModel(ProfileDto profile)
         {
             return new ProfileViewModel
             {
-                Login = user.Login,
-                Language = user.Language,
-                Email = user.UserProfile?.Email ?? string.Empty,
-                FirstName = user.UserProfile?.FirstName,
-                LastName = user.UserProfile?.LastName,
-                Mobilephone = user.UserProfile?.Mobilephone,
-                BirthDate = user.UserProfile?.BirthDate,
-                AvatarUrl = ResolveAvatarUrl(user.AvatarUrl),
+                Login = profile.Login,
+                Language = profile.Language,
+                Email = profile.Email,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                Mobilephone = profile.Mobilephone,
+                BirthDate = profile.BirthDate,
+                AvatarUrl = ResolveAvatarUrl(profile.AvatarUrl),
             };
         }
 
