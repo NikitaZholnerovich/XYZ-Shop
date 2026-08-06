@@ -10,6 +10,8 @@
   <data name="Filter" xml:space="preserve"><value>Filter</value></data>
   <data name="Genre" xml:space="preserve"><value>Genre</value></data>
   <data name="All_Genres" xml:space="preserve"><value>-- All genres --</value></data>
+  <data name="Publisher" xml:space="preserve"><value>Publisher</value></data>
+  <data name="All_Publishers" xml:space="preserve"><value>-- All publishers --</value></data>
   <data name="Max_Price" xml:space="preserve"><value>Max price</value></data>
   <data name="Sort_By" xml:space="preserve"><value>Sort by</value></data>
   <data name="Default" xml:space="preserve"><value>-- Default --</value></data>

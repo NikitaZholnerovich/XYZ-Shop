@@ -3,6 +3,7 @@ namespace XYZ_shop.Application.Dtos
     public class CatalogFilterDto
     {
         public int? GenreId { get; set; }
+        public int? PublisherId { get; set; }
         public decimal? MaxPrice { get; set; }
         public string? SortBy { get; set; }
         public string? SortDirection { get; set; }

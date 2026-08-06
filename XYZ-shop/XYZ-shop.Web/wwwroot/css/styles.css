@@ -308,6 +308,7 @@ a {
     font-weight: 500;
     color: #8f98a3;
     border: 1px solid rgba(102, 192, 244, 0.3);
+    text-decoration: none;
 }
 
     .game-genre:hover {
@@ -660,7 +661,13 @@ a {
     color: #8f98a0;
     padding-left: 8px;
     border-left: 1px solid #2a475e;
+    text-decoration: none;
 }
+
+    .game-publisher:hover {
+        color: #67c1f5;
+        text-decoration: underline;
+    }
 
 .game-price {
     font-size: 26px;

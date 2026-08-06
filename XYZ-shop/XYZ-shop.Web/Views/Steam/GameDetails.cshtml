@@ -34,12 +34,18 @@
                 <div class="game-meta">
                     @foreach (var genre in Model.Genres)
                     {
-                        <span class="game-genre">@genre</span>
+                        <a class="game-genre"
+                           asp-controller="Steam"
+                           asp-action="Catalog"
+                           asp-route-GenreId="@genre.Id">@genre.Name</a>
                     }
 
-                    @if (!string.IsNullOrEmpty(Model.PublisherName))
+                    @if (!string.IsNullOrEmpty(Model.PublisherName) && Model.PublisherId.HasValue)
                     {
-                        <span class="game-publisher">@Model.PublisherName</span>
+                        <a class="game-publisher"
+                           asp-controller="Steam"
+                           asp-action="Catalog"
+                           asp-route-PublisherId="@Model.PublisherId">@Model.PublisherName</a>
                     }
                 </div>
 

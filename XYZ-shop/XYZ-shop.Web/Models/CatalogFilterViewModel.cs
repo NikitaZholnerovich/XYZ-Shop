@@ -3,6 +3,7 @@
     public class CatalogFilterViewModel
     {
         public int? GenreId { get; set; }
+        public int? PublisherId { get; set; }
         public decimal? MaxPrice { get; set; }
         public string? SortBy { get; set; }
         public string? SortDirection { get; set; }
