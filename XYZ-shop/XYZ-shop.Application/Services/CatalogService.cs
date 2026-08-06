@@ -89,6 +89,16 @@ namespace XYZ_shop.Application.Services
             }
 
             var reviews = game.GameReviews ?? new();
+            var genreId = game.GameGenres?.FirstOrDefault()?.Id;
+            var similarGames = genreId.HasValue
+                ? _gameRepository
+                    .GetGames(new GameFilter { GenreId = genreId }, 1, 7)
+                    .Items
+                    .Where(g => g.Id != game.Id)
+                    .Take(6)
+                    .Select(_gameMapper.ToDto)
+                    .ToList()
+                : new List<GameDto>();
 
             return new GameDetailsDto
             {
@@ -121,6 +131,7 @@ namespace XYZ_shop.Application.Services
                         ModifiedAt = r.ModifiedAt,
                     })
                     .ToList(),
+                SimilarGames = similarGames,
             };
         }
 

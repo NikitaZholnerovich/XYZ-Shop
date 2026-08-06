@@ -86,6 +86,39 @@
         </div>
     </section>
 
+    @if (Model.SimilarGames.Any())
+    {
+        <section class="section">
+            <h2 class="section-title">Similar games</h2>
+            <div class="cards">
+                @foreach (var game in Model.SimilarGames)
+                {
+                    <article class="card">
+                        <div class="card-media">
+                            <img src="@game.ImageUrl" alt="@game.Title" />
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">@game.Title</h3>
+                            @if (game.Genres.Any())
+                            {
+                                <div class="feature-genres">
+                                    @foreach (var genre in game.Genres)
+                                    {
+                                        <span class="game-genre">@genre</span>
+                                    }
+                                </div>
+                            }
+                            <div class="card-footer">
+                                <span class="price">$@game.Price.ToString("0.00")</span>
+                                <a class="btn btn--small" href="/Steam/GameDetails/@game.Id">View</a>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+
     <section class="section">
         <h2 class="section-title">@GameDetailsPage.Reviews_Title</h2>
 

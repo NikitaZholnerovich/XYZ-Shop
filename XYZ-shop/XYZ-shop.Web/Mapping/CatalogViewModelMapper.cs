@@ -165,6 +165,9 @@ namespace XYZ_shop.Web.Mapping
                         ModifiedAt = r.ModifiedAt,
                     })
                     .ToList(),
+                SimilarGames = game.SimilarGames
+                    .Select(ToViewModel)
+                    .ToList(),
             };
         }
 
