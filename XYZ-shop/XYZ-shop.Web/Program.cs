@@ -102,7 +102,14 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// Skip HTTPS redirection when the app only listens on HTTP (e.g. Docker).
+var urls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS") ?? string.Empty;
+if (!urls.Contains("http://", StringComparison.OrdinalIgnoreCase)
+    || urls.Contains("https://", StringComparison.OrdinalIgnoreCase))
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseStaticFiles();
 
 app.UseRouting();
