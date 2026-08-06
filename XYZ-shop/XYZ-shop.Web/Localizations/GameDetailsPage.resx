@@ -21,4 +21,5 @@
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="No_Reviews_Yet" xml:space="preserve"><value>No reviews yet</value></data>
   <data name="Not_Reviewed" xml:space="preserve"><value>This game has not been reviewed.</value></data>
+  <data name="Edited" xml:space="preserve"><value>Edited</value></data>
 </root>

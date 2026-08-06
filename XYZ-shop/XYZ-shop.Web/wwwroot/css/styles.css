@@ -872,6 +872,20 @@ article.card.active {
         line-height: 1.4;
     }
 
+.review-dates {
+    margin-left: auto;
+    font-size: 12px;
+    color: #6b7b8a;
+}
+
+.review-edited {
+    color: #8f98a0;
+}
+
+.review-dates time {
+    white-space: nowrap;
+}
+
 #show-review-form-btn {
     margin: 20px 0 10px 0;
     padding: 8px 16px;

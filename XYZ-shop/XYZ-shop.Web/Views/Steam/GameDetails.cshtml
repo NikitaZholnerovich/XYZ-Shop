@@ -159,6 +159,16 @@
                         <img class="user-avatar-small" src="@avatarUrl" alt="" />
                         <b>@review.AuthorName</b>
                         <span class="review-rating">@review.Rating / 10</span>
+                        <span class="review-dates">
+                            <time datetime="@review.CreatedAt.ToString("o")">@review.CreatedAt.ToLocalTime().ToString("g")</time>
+                            @if (review.ModifiedAt.HasValue)
+                            {
+                                <span class="review-edited">
+                                    · @GameDetailsPage.Edited
+                                    <time datetime="@review.ModifiedAt.Value.ToString("o")">@review.ModifiedAt.Value.ToLocalTime().ToString("g")</time>
+                                </span>
+                            }
+                        </span>
                     </div>
                     <div>@review.Text</div>
                 </article>

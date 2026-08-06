@@ -21,4 +21,5 @@
   <data name="Cancel" xml:space="preserve"><value>Отмена</value></data>
   <data name="No_Reviews_Yet" xml:space="preserve"><value>Пока нет отзывов</value></data>
   <data name="Not_Reviewed" xml:space="preserve"><value>Эту игру ещё не оценивали.</value></data>
+  <data name="Edited" xml:space="preserve"><value>Изменено</value></data>
 </root>

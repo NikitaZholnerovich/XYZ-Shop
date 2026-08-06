@@ -25,5 +25,6 @@ namespace XYZ_shop.Web.Localizations
         public static string Cancel => ResourceManager.GetString(nameof(Cancel), CultureInfo.CurrentUICulture)!;
         public static string No_Reviews_Yet => ResourceManager.GetString(nameof(No_Reviews_Yet), CultureInfo.CurrentUICulture)!;
         public static string Not_Reviewed => ResourceManager.GetString(nameof(Not_Reviewed), CultureInfo.CurrentUICulture)!;
+        public static string Edited => ResourceManager.GetString(nameof(Edited), CultureInfo.CurrentUICulture)!;
     }
 }

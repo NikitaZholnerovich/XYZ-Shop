@@ -65,6 +65,10 @@
             }),
             success: function (review) {
                 const avatarUrl = review.authorAvatarUrl || '/images/default-avatar.png';
+                const createdAt = review.createdAt
+                    ? new Date(review.createdAt).toLocaleString()
+                    : '';
+
                 $('#reviews-empty').hide();
                 $('#reviews-panel').prepend(`
                     <article class="review-item">
@@ -72,6 +76,7 @@
                             <img class="user-avatar-small" src="${escapeHtml(avatarUrl)}" alt="" />
                             <b>${escapeHtml(review.author)}</b>
                             <span class="review-rating">${escapeHtml(String(review.rating))} / 10</span>
+                            ${createdAt ? `<span class="review-dates"><time>${escapeHtml(createdAt)}</time></span>` : ''}
                         </div>
                         <div>${escapeHtml(review.text)}</div>
                     </article>
