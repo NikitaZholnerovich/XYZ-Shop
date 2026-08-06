@@ -25,6 +25,7 @@ services:
       context: .
       dockerfile: XYZ-shop/XYZ-shop.Web/Dockerfile
     container_name: xyz-shop-web
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
