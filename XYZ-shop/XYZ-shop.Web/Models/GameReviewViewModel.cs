@@ -12,5 +12,6 @@
         public int GameId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
+        public bool CanManage { get; set; }
     }
 }

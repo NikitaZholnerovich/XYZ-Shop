@@ -74,6 +74,11 @@ namespace XYZ_shop.Infrastructure.Repositories
                 games = games.Where(g => g.GameGenres.Any(gg => gg.Id == filter.GenreId.Value));
             }
 
+            if (filter.PublisherId.HasValue)
+            {
+                games = games.Where(g => g.PublisherId == filter.PublisherId.Value);
+            }
+
             if (filter.MaxPrice.HasValue)
             {
                 games = games.Where(g => g.Price <= filter.MaxPrice.Value);

@@ -40,6 +40,19 @@
             </div>
 
             <div class="form-group">
+                <label>@CatalogPage.Publisher</label>
+                <select name="PublisherId" class="form-control">
+                    <option value="">@CatalogPage.All_Publishers</option>
+                    @foreach (var publisher in Model.Publishers)
+                    {
+                        <option value="@publisher.Value" selected="@(Model.Filter.PublisherId?.ToString() == publisher.Value ? "selected" : null)">
+                            @publisher.Text
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label>@CatalogPage.Max_Price</label>
                 <input type="number" name="MaxPrice" step="0.01" class="form-control"
                        value="@Model.Filter.MaxPrice" />
@@ -131,6 +144,7 @@
                        asp-controller="Steam"
                        asp-action="Catalog"
                        asp-route-GenreId="@Model.Filter.GenreId"
+                       asp-route-PublisherId="@Model.Filter.PublisherId"
                        asp-route-MaxPrice="@Model.Filter.MaxPrice"
                        asp-route-SortBy="@Model.Filter.SortBy"
                        asp-route-SortDirection="@Model.Filter.SortDirection"
@@ -144,6 +158,7 @@
                        asp-controller="Steam"
                        asp-action="Catalog"
                        asp-route-GenreId="@Model.Filter.GenreId"
+                       asp-route-PublisherId="@Model.Filter.PublisherId"
                        asp-route-MaxPrice="@Model.Filter.MaxPrice"
                        asp-route-SortBy="@Model.Filter.SortBy"
                        asp-route-SortDirection="@Model.Filter.SortDirection"
@@ -157,6 +172,7 @@
                        asp-controller="Steam"
                        asp-action="Catalog"
                        asp-route-GenreId="@Model.Filter.GenreId"
+                       asp-route-PublisherId="@Model.Filter.PublisherId"
                        asp-route-MaxPrice="@Model.Filter.MaxPrice"
                        asp-route-SortBy="@Model.Filter.SortBy"
                        asp-route-SortDirection="@Model.Filter.SortDirection"

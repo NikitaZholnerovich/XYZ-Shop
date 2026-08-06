@@ -8,6 +8,7 @@ using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Application.Mapping;
 using XYZ_shop.Application.Services;
 using XYZ_shop.Infrastructure.Apis;
+using XYZ_shop.Infrastructure.BackgroundServices;
 using XYZ_shop.Infrastructure.Data;
 using XYZ_shop.Infrastructure.Repositories;
 using XYZ_shop.Infrastructure.Security;
@@ -72,6 +73,8 @@ builder.Services.AddScoped<IGameReviewRepository, GameReviewRepository>();
 builder.Services.AddScoped<ICommunityChatMessageRepository, CommunityChatMessageRepository>();
 builder.Services.AddScoped<IGameMapper, GameMapper>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IGameReviewService, GameReviewService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<ICatalogViewModelMapper, CatalogViewModelMapper>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IChatService, ChatService>();
@@ -84,6 +87,7 @@ builder.Services.AddHttpClient<IRawgApi, RawgApi>(client =>
     client.BaseAddress = new Uri("https://api.rawg.io/api/");
 });
 
+builder.Services.AddScoped<IRatingAnalyticsService, RatingAnalyticsService>();
 builder.Services.AddHostedService<RatingAnalyticsBackgroundService>();
 builder.Services.AddHttpContextAccessor();
 

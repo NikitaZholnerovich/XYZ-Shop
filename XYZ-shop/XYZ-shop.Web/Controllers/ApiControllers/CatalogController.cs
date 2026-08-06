@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using XYZ_shop.Application.Abstractions.Repositories;
 using XYZ_shop.Application.Abstractions.Services;
 using XYZ_shop.Web.CustomAuthAttributes.Api;
 
@@ -9,19 +8,17 @@ namespace XYZ_shop.Web.Controllers.ApiControllers
     [ApiController]
     public class CatalogController : ControllerBase
     {
-        private readonly IGameRepository _gameRepository;
-        private readonly IAuthService _authService;
+        private readonly ICatalogService _catalogService;
 
-        public CatalogController(IGameRepository gameRepository, IAuthService authService)
+        public CatalogController(ICatalogService catalogService)
         {
-            _gameRepository = gameRepository;
-            _authService = authService;
+            _catalogService = catalogService;
         }
 
         [IsAdminApi]
         public bool Delete([FromQuery] List<int> gameIds)
         {
-            _gameRepository.Delete(gameIds);
+            _catalogService.DeleteGames(gameIds);
             return true;
         }
     }

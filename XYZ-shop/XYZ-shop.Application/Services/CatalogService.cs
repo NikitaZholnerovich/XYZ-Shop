@@ -46,6 +46,7 @@ namespace XYZ_shop.Application.Services
             var repositoryFilter = new GameFilter
             {
                 GenreId = filter.GenreId,
+                PublisherId = filter.PublisherId,
                 MaxPrice = filter.MaxPrice,
                 SortBy = filter.SortBy,
                 SortDirection = filter.SortDirection,
@@ -60,14 +61,8 @@ namespace XYZ_shop.Application.Services
                 Games = games.Items
                     .Select(_gameMapper.ToDto)
                     .ToList(),
-                GameGenres = _gameGenreRepository.GetAll()
-                    .OrderBy(g => g.Name)
-                    .Select(g => new CatalogGenreDto
-                    {
-                        Id = g.Id,
-                        Name = g.Name,
-                    })
-                    .ToList(),
+                GameGenres = GetGameGenres(),
+                Publishers = GetPublishers(),
                 PaginationMetadata = new PaginationMetadataDto
                 {
                     CurrentPage = games.PageIndex,
@@ -111,7 +106,11 @@ namespace XYZ_shop.Application.Services
                 ReviewsCount = game.ReviewsCount ?? 0,
                 PositiveReviewsCount = game.PositiveReviewsCount ?? 0,
                 Genres = game.GameGenres?
-                    .Select(g => g.Name)
+                    .Select(g => new CatalogGenreDto
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                    })
                     .ToList() ?? new(),
                 PublisherName = game.Publisher?.Name,
                 PublisherId = game.PublisherId,
@@ -258,6 +257,16 @@ namespace XYZ_shop.Application.Services
             }
 
             _gameRepository.Remove(game);
+        }
+
+        public void DeleteGames(List<int> gameIds)
+        {
+            if (gameIds == null || gameIds.Count == 0)
+            {
+                return;
+            }
+
+            _gameRepository.Delete(gameIds);
         }
     }
 }

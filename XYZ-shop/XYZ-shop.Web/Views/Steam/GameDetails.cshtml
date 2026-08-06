@@ -34,12 +34,18 @@
                 <div class="game-meta">
                     @foreach (var genre in Model.Genres)
                     {
-                        <span class="game-genre">@genre</span>
+                        <a class="game-genre"
+                           asp-controller="Steam"
+                           asp-action="Catalog"
+                           asp-route-GenreId="@genre.Id">@genre.Name</a>
                     }
 
-                    @if (!string.IsNullOrEmpty(Model.PublisherName))
+                    @if (!string.IsNullOrEmpty(Model.PublisherName) && Model.PublisherId.HasValue)
                     {
-                        <span class="game-publisher">@Model.PublisherName</span>
+                        <a class="game-publisher"
+                           asp-controller="Steam"
+                           asp-action="Catalog"
+                           asp-route-PublisherId="@Model.PublisherId">@Model.PublisherName</a>
                     }
                 </div>
 
@@ -120,7 +126,17 @@
     }
 
     <section class="section">
-        <h2 class="section-title">@GameDetailsPage.Reviews_Title</h2>
+        <div class="reviews-header">
+            <h2 class="section-title">@GameDetailsPage.Reviews_Title</h2>
+            <label class="reviews-sort">
+                <span>@GameDetailsPage.Sort_By</span>
+                <select id="reviews-sort">
+                    <option value="newest">@GameDetailsPage.Sort_Newest</option>
+                    <option value="highest">@GameDetailsPage.Sort_Highest</option>
+                    <option value="lowest">@GameDetailsPage.Sort_Lowest</option>
+                </select>
+            </label>
+        </div>
 
         @if (AuthService.IsAuthenticated() && !Model.HasUserReviewed)
         {
@@ -142,19 +158,45 @@
             <p>@GameDetailsPage.Not_Reviewed</p>
         </div>
 
-        <div id="reviews-panel">
+        <div id="reviews-panel"
+             data-edited-label="@GameDetailsPage.Edited"
+             data-confirm-delete="@GameDetailsPage.Confirm_Delete_Review"
+             data-save-label="@GameDetailsPage.Save_Review"
+             data-cancel-label="@GameDetailsPage.Cancel"
+             data-edit-label="@GameDetailsPage.Edit_Review"
+             data-delete-label="@GameDetailsPage.Delete_Review">
             @foreach (var review in Model.Reviews)
             {
                 var avatarUrl = string.IsNullOrWhiteSpace(review.AuthorAvatarUrl)
                     ? "/images/default-avatar.png"
                     : review.AuthorAvatarUrl;
-                <article class="review-item">
+                <article class="review-item"
+                         data-id="@review.Id"
+                         data-rating="@review.Rating"
+                         data-created="@review.CreatedAt.ToString("o")">
                     <div class="review-item-header">
                         <img class="user-avatar-small" src="@avatarUrl" alt="" />
                         <b>@review.AuthorName</b>
                         <span class="review-rating">@review.Rating / 10</span>
+                        <span class="review-dates">
+                            <time datetime="@review.CreatedAt.ToString("o")">@review.CreatedAt.ToLocalTime().ToString("g")</time>
+                            @if (review.ModifiedAt.HasValue)
+                            {
+                                <span class="review-edited">
+                                    · @GameDetailsPage.Edited
+                                    <time datetime="@review.ModifiedAt.Value.ToString("o")">@review.ModifiedAt.Value.ToLocalTime().ToString("g")</time>
+                                </span>
+                            }
+                        </span>
                     </div>
-                    <div>@review.Text</div>
+                    <div class="review-text">@review.Text</div>
+                    @if (review.CanManage)
+                    {
+                        <div class="review-actions">
+                            <button type="button" class="btn btn--small review-edit-btn">@GameDetailsPage.Edit_Review</button>
+                            <button type="button" class="btn btn--small review-delete-btn">@GameDetailsPage.Delete_Review</button>
+                        </div>
+                    }
                 </article>
             }
         </div>

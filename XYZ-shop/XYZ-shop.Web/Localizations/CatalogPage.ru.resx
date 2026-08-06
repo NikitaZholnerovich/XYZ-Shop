@@ -10,6 +10,8 @@
   <data name="Filter" xml:space="preserve"><value>Фильтр</value></data>
   <data name="Genre" xml:space="preserve"><value>Жанр</value></data>
   <data name="All_Genres" xml:space="preserve"><value>-- Все жанры --</value></data>
+  <data name="Publisher" xml:space="preserve"><value>Издатель</value></data>
+  <data name="All_Publishers" xml:space="preserve"><value>-- Все издатели --</value></data>
   <data name="Max_Price" xml:space="preserve"><value>Макс. цена</value></data>
   <data name="Sort_By" xml:space="preserve"><value>Сортировка</value></data>
   <data name="Default" xml:space="preserve"><value>-- По умолчанию --</value></data>

@@ -21,4 +21,13 @@
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="No_Reviews_Yet" xml:space="preserve"><value>No reviews yet</value></data>
   <data name="Not_Reviewed" xml:space="preserve"><value>This game has not been reviewed.</value></data>
+  <data name="Edited" xml:space="preserve"><value>Edited</value></data>
+  <data name="Sort_By" xml:space="preserve"><value>Sort by</value></data>
+  <data name="Sort_Newest" xml:space="preserve"><value>Newest</value></data>
+  <data name="Sort_Highest" xml:space="preserve"><value>Highest rating</value></data>
+  <data name="Sort_Lowest" xml:space="preserve"><value>Lowest rating</value></data>
+  <data name="Edit_Review" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete_Review" xml:space="preserve"><value>Delete</value></data>
+  <data name="Save_Review" xml:space="preserve"><value>Save</value></data>
+  <data name="Confirm_Delete_Review" xml:space="preserve"><value>Delete this review?</value></data>
 </root>

@@ -14,6 +14,8 @@ namespace XYZ_shop.Web.Localizations
         public static string Filter => ResourceManager.GetString(nameof(Filter), CultureInfo.CurrentUICulture)!;
         public static string Genre => ResourceManager.GetString(nameof(Genre), CultureInfo.CurrentUICulture)!;
         public static string All_Genres => ResourceManager.GetString(nameof(All_Genres), CultureInfo.CurrentUICulture)!;
+        public static string Publisher => ResourceManager.GetString(nameof(Publisher), CultureInfo.CurrentUICulture)!;
+        public static string All_Publishers => ResourceManager.GetString(nameof(All_Publishers), CultureInfo.CurrentUICulture)!;
         public static string Max_Price => ResourceManager.GetString(nameof(Max_Price), CultureInfo.CurrentUICulture)!;
         public static string Sort_By => ResourceManager.GetString(nameof(Sort_By), CultureInfo.CurrentUICulture)!;
         public static string Default => ResourceManager.GetString(nameof(Default), CultureInfo.CurrentUICulture)!;

@@ -10,7 +10,7 @@ namespace XYZ_shop.Application.Dtos
         public double? AverageRating { get; set; }
         public int ReviewsCount { get; set; }
         public int PositiveReviewsCount { get; set; }
-        public List<string> Genres { get; set; } = new();
+        public List<CatalogGenreDto> Genres { get; set; } = new();
         public string? PublisherName { get; set; }
         public int? PublisherId { get; set; }
         public List<GameReviewDto> Reviews { get; set; } = new();

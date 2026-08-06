@@ -12,7 +12,7 @@
         public int ReviewsCount { get; set; }
         public int PositiveReviewsCount { get; set; }
 
-        public List<string> Genres { get; set; } = new();
+        public List<GenreLinkViewModel> Genres { get; set; } = new();
         public string? PublisherName { get; set; }
         public int? PublisherId { get; set; }
         public List<GameReviewViewModel> Reviews { get; set; } = new();

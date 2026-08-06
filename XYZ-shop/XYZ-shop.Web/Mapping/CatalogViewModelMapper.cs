@@ -30,6 +30,7 @@ namespace XYZ_shop.Web.Mapping
                 Filter = new CatalogFilterViewModel
                 {
                     GenreId = catalog.Filter.GenreId,
+                    PublisherId = catalog.Filter.PublisherId,
                     MaxPrice = catalog.Filter.MaxPrice,
                     SortBy = catalog.Filter.SortBy,
                     SortDirection = catalog.Filter.SortDirection,
@@ -39,6 +40,9 @@ namespace XYZ_shop.Web.Mapping
                 Games = catalog.Games.Select(ToViewModel).ToList(),
                 GameGenres = catalog.GameGenres
                     .Select(g => new SelectListItem(g.Name, g.Id.ToString()))
+                    .ToList(),
+                Publishers = catalog.Publishers
+                    .Select(p => new SelectListItem(p.Name, p.Id.ToString()))
                     .ToList(),
                 PaginationMetadata = new PaginationMetadataViewModel
                 {
@@ -96,6 +100,7 @@ namespace XYZ_shop.Web.Mapping
             return new CatalogFilterDto
             {
                 GenreId = filter.GenreId,
+                PublisherId = filter.PublisherId,
                 MaxPrice = filter.MaxPrice,
                 SortBy = filter.SortBy,
                 SortDirection = filter.SortDirection,
@@ -134,10 +139,11 @@ namespace XYZ_shop.Web.Mapping
         public GameDetailsViewModel ToViewModel(GameDetailsDto game)
         {
             var userId = _authService.IsAuthenticated() ? _authService.GetUserId() : 0;
+            var isModerator = _authService.AtLeastModerator();
 
             return new GameDetailsViewModel
             {
-                IsUserAtLeastModerator = _authService.AtLeastModerator(),
+                IsUserAtLeastModerator = isModerator,
                 Id = game.Id,
                 Title = game.Title,
                 Description = game.Description,
@@ -146,7 +152,13 @@ namespace XYZ_shop.Web.Mapping
                 AverageRating = game.AverageRating,
                 ReviewsCount = game.ReviewsCount,
                 PositiveReviewsCount = game.PositiveReviewsCount,
-                Genres = game.Genres,
+                Genres = game.Genres
+                    .Select(g => new GenreLinkViewModel
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                    })
+                    .ToList(),
                 PublisherName = game.PublisherName,
                 PublisherId = game.PublisherId,
                 HasUserReviewed = userId > 0 && game.Reviews.Any(r => r.AuthorId == userId),
@@ -163,6 +175,7 @@ namespace XYZ_shop.Web.Mapping
                         AuthorAvatarUrl = r.AuthorAvatarUrl,
                         CreatedAt = r.CreatedAt,
                         ModifiedAt = r.ModifiedAt,
+                        CanManage = userId > 0 && (r.AuthorId == userId || isModerator),
                     })
                     .ToList(),
                 SimilarGames = game.SimilarGames

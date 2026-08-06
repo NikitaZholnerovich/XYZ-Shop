@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using XYZ_shop.Application.Abstractions.Hubs;
 using XYZ_shop.Application.Abstractions.Services;
-using XYZ_shop.Application.Services;
 using XYZ_shop.Domain.Enums;
 using XYZ_shop.Web.CustomAuthAttributes;
 using XYZ_shop.Web.Hubs;

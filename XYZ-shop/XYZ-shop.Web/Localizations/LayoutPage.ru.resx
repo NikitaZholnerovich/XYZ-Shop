@@ -4,7 +4,7 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="Nav_Steam" xml:space="preserve"><value>Steam</value></data>
+  <data name="Nav_Steam" xml:space="preserve"><value>XYZ-shop</value></data>
   <data name="Nav_Catalog" xml:space="preserve"><value>Каталог</value></data>
   <data name="Nav_CommunityChat" xml:space="preserve"><value>Чат</value></data>
   <data name="Nav_Recommendations" xml:space="preserve"><value>Рекомендации</value></data>
@@ -16,7 +16,7 @@
   <data name="Search_Button" xml:space="preserve"><value>Найти</value></data>
   <data name="Footer_About_Company" xml:space="preserve"><value>О компании</value></data>
   <data name="Footer_Jobs" xml:space="preserve"><value>Вакансии</value></data>
-  <data name="Footer_Steamworks" xml:space="preserve"><value>Steamworks</value></data>
+  <data name="Footer_Steamworks" xml:space="preserve"><value>XYZ-shop</value></data>
   <data name="Footer_Support" xml:space="preserve"><value>Поддержка</value></data>
   <data name="Footer_Privacy_Policy" xml:space="preserve"><value>Конфиденциальность</value></data>
   <data name="Footer_Legal" xml:space="preserve"><value>Правовая информация</value></data>
