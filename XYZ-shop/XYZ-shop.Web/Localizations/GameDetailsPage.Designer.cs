@@ -26,5 +26,9 @@ namespace XYZ_shop.Web.Localizations
         public static string No_Reviews_Yet => ResourceManager.GetString(nameof(No_Reviews_Yet), CultureInfo.CurrentUICulture)!;
         public static string Not_Reviewed => ResourceManager.GetString(nameof(Not_Reviewed), CultureInfo.CurrentUICulture)!;
         public static string Edited => ResourceManager.GetString(nameof(Edited), CultureInfo.CurrentUICulture)!;
+        public static string Sort_By => ResourceManager.GetString(nameof(Sort_By), CultureInfo.CurrentUICulture)!;
+        public static string Sort_Newest => ResourceManager.GetString(nameof(Sort_Newest), CultureInfo.CurrentUICulture)!;
+        public static string Sort_Highest => ResourceManager.GetString(nameof(Sort_Highest), CultureInfo.CurrentUICulture)!;
+        public static string Sort_Lowest => ResourceManager.GetString(nameof(Sort_Lowest), CultureInfo.CurrentUICulture)!;
     }
 }

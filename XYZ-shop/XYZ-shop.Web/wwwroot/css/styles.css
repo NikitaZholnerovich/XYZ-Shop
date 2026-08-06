@@ -886,6 +886,35 @@ article.card.active {
     white-space: nowrap;
 }
 
+.reviews-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.reviews-header .section-title {
+    margin-bottom: 0;
+}
+
+.reviews-sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8f98a0;
+    font-size: 13px;
+}
+
+.reviews-sort select {
+    background: #1a2533;
+    color: #c7d5e0;
+    border: 1px solid #2a475e;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
 #show-review-form-btn {
     margin: 20px 0 10px 0;
     padding: 8px 16px;

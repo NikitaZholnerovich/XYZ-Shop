@@ -126,7 +126,17 @@
     }
 
     <section class="section">
-        <h2 class="section-title">@GameDetailsPage.Reviews_Title</h2>
+        <div class="reviews-header">
+            <h2 class="section-title">@GameDetailsPage.Reviews_Title</h2>
+            <label class="reviews-sort">
+                <span>@GameDetailsPage.Sort_By</span>
+                <select id="reviews-sort">
+                    <option value="newest">@GameDetailsPage.Sort_Newest</option>
+                    <option value="highest">@GameDetailsPage.Sort_Highest</option>
+                    <option value="lowest">@GameDetailsPage.Sort_Lowest</option>
+                </select>
+            </label>
+        </div>
 
         @if (AuthService.IsAuthenticated() && !Model.HasUserReviewed)
         {
@@ -154,7 +164,9 @@
                 var avatarUrl = string.IsNullOrWhiteSpace(review.AuthorAvatarUrl)
                     ? "/images/default-avatar.png"
                     : review.AuthorAvatarUrl;
-                <article class="review-item">
+                <article class="review-item"
+                         data-rating="@review.Rating"
+                         data-created="@review.CreatedAt.ToString("o")">
                     <div class="review-item-header">
                         <img class="user-avatar-small" src="@avatarUrl" alt="" />
                         <b>@review.AuthorName</b>

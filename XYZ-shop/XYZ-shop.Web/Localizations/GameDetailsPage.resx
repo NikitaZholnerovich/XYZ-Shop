@@ -22,4 +22,8 @@
   <data name="No_Reviews_Yet" xml:space="preserve"><value>No reviews yet</value></data>
   <data name="Not_Reviewed" xml:space="preserve"><value>This game has not been reviewed.</value></data>
   <data name="Edited" xml:space="preserve"><value>Edited</value></data>
+  <data name="Sort_By" xml:space="preserve"><value>Sort by</value></data>
+  <data name="Sort_Newest" xml:space="preserve"><value>Newest</value></data>
+  <data name="Sort_Highest" xml:space="preserve"><value>Highest rating</value></data>
+  <data name="Sort_Lowest" xml:space="preserve"><value>Lowest rating</value></data>
 </root>

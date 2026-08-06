@@ -22,4 +22,8 @@
   <data name="No_Reviews_Yet" xml:space="preserve"><value>Пока нет отзывов</value></data>
   <data name="Not_Reviewed" xml:space="preserve"><value>Эту игру ещё не оценивали.</value></data>
   <data name="Edited" xml:space="preserve"><value>Изменено</value></data>
+  <data name="Sort_By" xml:space="preserve"><value>Сортировка</value></data>
+  <data name="Sort_Newest" xml:space="preserve"><value>Сначала новые</value></data>
+  <data name="Sort_Highest" xml:space="preserve"><value>Высокий рейтинг</value></data>
+  <data name="Sort_Lowest" xml:space="preserve"><value>Низкий рейтинг</value></data>
 </root>
