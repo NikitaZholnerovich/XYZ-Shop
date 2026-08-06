@@ -1,0 +1,16 @@
+.git
+.github
+.gitignore
+.env
+**/.vs
+**/bin
+**/obj
+**/*.user
+**/*.suo
+XYZ-shop/XYZ-shop.Tests.E2E
+_e2e_diag
+**/node_modules
+README.md
+docs
+scripts
+*.md
