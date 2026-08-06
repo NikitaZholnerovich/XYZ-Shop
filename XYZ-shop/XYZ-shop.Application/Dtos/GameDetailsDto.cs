@@ -14,5 +14,6 @@ namespace XYZ_shop.Application.Dtos
         public string? PublisherName { get; set; }
         public int? PublisherId { get; set; }
         public List<GameReviewDto> Reviews { get; set; } = new();
+        public List<GameDto> SimilarGames { get; set; } = new();
     }
 }

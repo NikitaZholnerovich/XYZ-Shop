@@ -16,6 +16,7 @@
         public string? PublisherName { get; set; }
         public int? PublisherId { get; set; }
         public List<GameReviewViewModel> Reviews { get; set; } = new();
+        public List<SteamGameViewModel> SimilarGames { get; set; } = new();
         public bool HasUserReviewed { get; set; }
     }
 }
