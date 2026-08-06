@@ -26,4 +26,8 @@
   <data name="Sort_Newest" xml:space="preserve"><value>Сначала новые</value></data>
   <data name="Sort_Highest" xml:space="preserve"><value>Высокий рейтинг</value></data>
   <data name="Sort_Lowest" xml:space="preserve"><value>Низкий рейтинг</value></data>
+  <data name="Edit_Review" xml:space="preserve"><value>Изменить</value></data>
+  <data name="Delete_Review" xml:space="preserve"><value>Удалить</value></data>
+  <data name="Save_Review" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="Confirm_Delete_Review" xml:space="preserve"><value>Удалить этот отзыв?</value></data>
 </root>

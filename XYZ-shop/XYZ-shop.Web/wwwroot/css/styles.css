@@ -872,6 +872,41 @@ article.card.active {
         line-height: 1.4;
     }
 
+.review-text {
+    margin-top: 6px;
+    color: #a0b3c4;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.review-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.review-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.review-edit-text,
+.review-edit-rating {
+    width: 100%;
+    background: #101820;
+    color: #c7d5e0;
+    border: 1px solid #2a475e;
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+
+.review-edit-actions {
+    display: flex;
+    gap: 8px;
+}
+
 .review-dates {
     margin-left: auto;
     font-size: 12px;

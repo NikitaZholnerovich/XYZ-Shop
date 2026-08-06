@@ -30,5 +30,9 @@ namespace XYZ_shop.Web.Localizations
         public static string Sort_Newest => ResourceManager.GetString(nameof(Sort_Newest), CultureInfo.CurrentUICulture)!;
         public static string Sort_Highest => ResourceManager.GetString(nameof(Sort_Highest), CultureInfo.CurrentUICulture)!;
         public static string Sort_Lowest => ResourceManager.GetString(nameof(Sort_Lowest), CultureInfo.CurrentUICulture)!;
+        public static string Edit_Review => ResourceManager.GetString(nameof(Edit_Review), CultureInfo.CurrentUICulture)!;
+        public static string Delete_Review => ResourceManager.GetString(nameof(Delete_Review), CultureInfo.CurrentUICulture)!;
+        public static string Save_Review => ResourceManager.GetString(nameof(Save_Review), CultureInfo.CurrentUICulture)!;
+        public static string Confirm_Delete_Review => ResourceManager.GetString(nameof(Confirm_Delete_Review), CultureInfo.CurrentUICulture)!;
     }
 }

@@ -26,4 +26,8 @@
   <data name="Sort_Newest" xml:space="preserve"><value>Newest</value></data>
   <data name="Sort_Highest" xml:space="preserve"><value>Highest rating</value></data>
   <data name="Sort_Lowest" xml:space="preserve"><value>Lowest rating</value></data>
+  <data name="Edit_Review" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete_Review" xml:space="preserve"><value>Delete</value></data>
+  <data name="Save_Review" xml:space="preserve"><value>Save</value></data>
+  <data name="Confirm_Delete_Review" xml:space="preserve"><value>Delete this review?</value></data>
 </root>

@@ -139,10 +139,11 @@ namespace XYZ_shop.Web.Mapping
         public GameDetailsViewModel ToViewModel(GameDetailsDto game)
         {
             var userId = _authService.IsAuthenticated() ? _authService.GetUserId() : 0;
+            var isModerator = _authService.AtLeastModerator();
 
             return new GameDetailsViewModel
             {
-                IsUserAtLeastModerator = _authService.AtLeastModerator(),
+                IsUserAtLeastModerator = isModerator,
                 Id = game.Id,
                 Title = game.Title,
                 Description = game.Description,
@@ -174,6 +175,7 @@ namespace XYZ_shop.Web.Mapping
                         AuthorAvatarUrl = r.AuthorAvatarUrl,
                         CreatedAt = r.CreatedAt,
                         ModifiedAt = r.ModifiedAt,
+                        CanManage = userId > 0 && (r.AuthorId == userId || isModerator),
                     })
                     .ToList(),
                 SimilarGames = game.SimilarGames
