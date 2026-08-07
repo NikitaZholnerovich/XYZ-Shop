@@ -1,6 +1,6 @@
 # XYZ-Shop
 
-ASP.NET Core 8 MVC game store inspired by Steam: browse a catalog, manage games, leave reviews, chat in real time, and get recommendations from the [RAWG](https://rawg.io/apidocs) API.
+ASP.NET Core 8 MVC game store inspired by Steam: browse a catalog, manage games, leave reviews, chat in real time, and get recommendations from the [RAWG](https://rawg.io/apidocs) API. Optional React catalog UI lives in `react-front` (local only — not part of Docker).
 
 ## Stack
 
@@ -8,16 +8,18 @@ ASP.NET Core 8 MVC game store inspired by Steam: browse a catalog, manage games,
 - **EF Core 8** + **SQL Server**
 - **JWT** cookie authentication, BCrypt password hashing
 - **Bootstrap / jQuery** front-end assets
+- **React + Vite + TypeScript** — optional SPA in `react-front`
 - Localization: English / Russian
 
 ## Solution structure
 
 ```text
 XYZ-Shop/
-├── docker-compose.yml          # App + SQL Server containers
+├── docker-compose.yml          # App + SQL Server containers (ASP.NET + MSSQL only)
 ├── .env.example                # Secrets template for Docker / GCP
 ├── scripts/seed-data.sql       # Sample data (after migrations)
 ├── docs/deploy-gcp.md          # Google Cloud VM deployment
+├── react-front/                # React catalog SPA (local `npm run dev`)
 └── XYZ-shop/
     ├── XYZ-shop.Web            # MVC host, auth, hubs, views
     ├── XYZ-shop.Application    # Services, DTOs, abstractions
@@ -34,6 +36,7 @@ Default route: `Steam/Index` (`/{controller=Steam}/{action=Index}/{id?}`).
 - SQL Server or **LocalDB**
 - EF Core tools: `dotnet tool install --global dotnet-ef`
 - RAWG API key (for recommendations)
+- Node.js 20+ (only if you run the React front-end)
 
 ## Configuration
 
@@ -71,6 +74,16 @@ dotnet run --project XYZ-shop.Web --launch-profile https
 - HTTP: `http://localhost:5256`
 - HTTPS: `https://localhost:7063`
 
+### React front-end (optional)
+
+Runs locally against the ASP.NET API via Vite proxy (`/api` → `https://localhost:7063`). Not included in Docker Compose.
+
+```bash
+cd react-front
+npm install
+npm run dev
+```
+
 ### Seed sample data
 
 Apply schema first (`database update`), then:
@@ -97,7 +110,7 @@ The script is idempotent: it skips if `Games` already has rows.
 
 ## Docker Compose (app + MSSQL)
 
-Two containers on one host: `web` (ASP.NET) and `db` (SQL Server 2022).
+Two containers on one host: `web` (ASP.NET) and `db` (SQL Server 2022). React is **not** containerized.
 
 ```bash
 cp .env.example .env
