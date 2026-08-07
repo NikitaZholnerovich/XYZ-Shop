@@ -48,7 +48,14 @@ INSERT INTO dbo.Publishers (Id, Name, Description, CreatedAt, ModifiedAt) VALUES
 (8,  N'ConcernedApe', N'Independent developer of Stardew Valley.', @Now, NULL),
 (9,  N'Game Science', N'Developer of Black Myth: Wukong.', @Now, NULL),
 (10, N'Sony Interactive Entertainment', N'PlayStation publishing label (God of War and more).', @Now, NULL),
-(11, N'Team Cherry', N'Australian indie studio, creators of Hollow Knight.', @Now, NULL);
+(11, N'Team Cherry', N'Australian indie studio, creators of Hollow Knight.', @Now, NULL),
+(12, N'Re-Logic', N'Indie studio behind Terraria.', @Now, NULL),
+(13, N'Bethesda Softworks', N'Publisher of The Elder Scrolls, Fallout, and DOOM.', @Now, NULL),
+(14, N'Capcom', N'Japanese publisher of Monster Hunter, Resident Evil, and Street Fighter.', @Now, NULL),
+(15, N'Electronic Arts', N'Major publisher of FIFA, Apex Legends, and It Takes Two.', @Now, NULL),
+(16, N'ZA/UM', N'Studio behind Disco Elysium.', @Now, NULL),
+(17, N'Maddy Makes Games', N'Indie studio known for Celeste.', @Now, NULL),
+(18, N'Zeekerss', N'Independent developer of Lethal Company.', @Now, NULL);
 SET IDENTITY_INSERT dbo.Publishers OFF;
 
 -- Genres
@@ -154,7 +161,67 @@ INSERT INTO dbo.Games (
 (14, N'Sekiro: Shadows Die Twice',
  N'Carve your own clever path to vengeance in an epic adventure from FromSoftware, creators of Bloodborne and the Dark Souls series.',
  N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/814380/header.jpg',
- 2, 1, NULL, 59.99, 9.0, 1, 1, @Now, NULL);
+ 2, 1, NULL, 59.99, 9.0, 1, 1, @Now, NULL),
+
+(15, N'Dota 2',
+ N'Every day, millions of players worldwide enter battle as one of over a hundred Dota heroes in this free-to-play MOBA.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/570/header.jpg',
+ 5, 1, NULL, 0.00, 8.5, 1, 1, @Now, NULL),
+
+(16, N'Portal 2',
+ N'The cake is still a lie. Solve mind-bending puzzles with portals, lasers, and gel in Valve''s acclaimed co-op and single-player sequel.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/620/header.jpg',
+ 5, 1, 1, 9.99, 10.0, 1, 1, @Now, NULL),
+
+(17, N'DARK SOULS III',
+ N'The fire fades and the lords go without thrones. Face punishing combat and cryptic lore in the final chapter of the Dark Souls trilogy.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/374320/header.jpg',
+ 2, 1, NULL, 39.99, 9.0, 1, 1, @Now, NULL),
+
+(18, N'Terraria',
+ N'Dig, fight, explore, build: the very world is at your disposal as you fight for survival, fortune, and glory in this 2D sandbox adventure.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg',
+ 12, 3, NULL, 9.99, 9.5, 1, 1, @Now, NULL),
+
+(19, N'The Elder Scrolls V: Skyrim Special Edition',
+ N'Winner of more than 200 Game of the Year awards — Skyrim Special Edition brings the epic fantasy to life with remastered visuals.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/header.jpg',
+ 13, 1, 1, 39.99, 9.0, 1, 1, @Now, NULL),
+
+(20, N'DOOM Eternal',
+ N'Hell''s armies have invaded Earth. Become the Slayer in an essential combination of speed and power in the ultimate DOOM game.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/782330/header.jpg',
+ 13, 1, NULL, 19.99, 9.0, 1, 1, @Now, NULL),
+
+(21, N'Monster Hunter: World',
+ N'Hunt gigantic monsters in living, breathing ecosystems as you carve gear from trophies and climb the ranks of the Hunter''s Guild.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/582010/header.jpg',
+ 14, 1, NULL, 29.99, 8.5, 1, 1, @Now, NULL),
+
+(22, N'It Takes Two',
+ N'Embark on the craziest journey of your life in this split-screen co-op adventure about relationship strife and platforming mayhem.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1426210/header.jpg',
+ 15, 2, 2, 39.99, 9.5, 1, 1, @Now, NULL),
+
+(23, N'Resident Evil 4',
+ N'Revisit the nightmare that revolutionized survival horror — Leon S. Kennedy''s mission to rescue the president''s daughter, remade.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/header.jpg',
+ 14, 1, NULL, 39.99, 9.5, 1, 1, @Now, NULL),
+
+(24, N'Disco Elysium - The Final Cut',
+ N'Detective RPG. Highest ever metacritic for an RPG. Free speech. Absolute democracy. Disco Elysium is a groundbreaking open-world RPG.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632470/header.jpg',
+ 16, 3, 3, 39.99, 10.0, 1, 1, @Now, NULL),
+
+(25, N'Celeste',
+ N'Help Madeline survive her inner demons on her journey to the top of Celeste Mountain in this tight, challenging platformer.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/504230/header.jpg',
+ 17, 3, NULL, 19.99, 9.5, 1, 1, @Now, NULL),
+
+(26, N'Lethal Company',
+ N'A co-op horror about scavenging scrap for the Company. Stay alive, meet the quota, and try not to scream.',
+ N'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/header.jpg',
+ 18, 2, NULL, 9.99, 9.0, 1, 1, @Now, NULL);
 SET IDENTITY_INSERT dbo.Games OFF;
 
 -- Game <-> Genre
@@ -172,7 +239,19 @@ INSERT INTO dbo.GamesToGenres (GameGenresId, GamesId) VALUES
 (1, 11), (2, 11),           -- Wukong: Action, RPG
 (1, 12), (3, 12),           -- GoW: Action, Adventure
 (1, 13), (5, 13),           -- Hollow Knight: Action, Indie
-(1, 14), (3, 14);           -- Sekiro: Action, Adventure
+(1, 14), (3, 14),           -- Sekiro: Action, Adventure
+(1, 15), (4, 15),           -- Dota 2: Action, Strategy
+(3, 16), (5, 16),           -- Portal 2: Adventure, Indie
+(1, 17), (2, 17),           -- DS3: Action, RPG
+(3, 18), (5, 18),           -- Terraria: Adventure, Indie
+(2, 19), (3, 19),           -- Skyrim: RPG, Adventure
+(1, 20), (6, 20),           -- DOOM Eternal: Action, Shooter
+(1, 21), (3, 21),           -- MHW: Action, Adventure
+(1, 22), (3, 22),           -- It Takes Two: Action, Adventure
+(1, 23), (8, 23),           -- RE4: Action, Horror
+(2, 24), (3, 24),           -- Disco Elysium: RPG, Adventure
+(3, 25), (5, 25),           -- Celeste: Adventure, Indie
+(5, 26), (8, 26);           -- Lethal Company: Indie, Horror
 
 -- Reviews
 SET IDENTITY_INSERT dbo.GameReviews ON;
@@ -191,7 +270,19 @@ INSERT INTO dbo.GameReviews (Id, Text, Rating, AuthorId, GameId, CreatedAt, Modi
 (12, N'Stunning boss fights and spectacle.', 8, 3, 11, @Now, NULL),
 (13, N'Best father-son story in gaming.', 10, 2, 12, @Now, NULL),
 (14, N'Metroivania perfection. Atmosphere is unmatched.', 9, 3, 13, @Now, NULL),
-(15, N'Demanding combat that feels amazing once it clicks.', 9, 2, 14, @Now, NULL);
+(15, N'Demanding combat that feels amazing once it clicks.', 9, 2, 14, @Now, NULL),
+(16, N'Still the best free MOBA after all these years.', 8, 2, 15, @Now, NULL),
+(17, N'Puzzle design and humor are unmatched. Play co-op!', 10, 3, 16, @Now, NULL),
+(18, N'Brutal, fair, and gorgeous. Bonfire ahead.', 9, 2, 17, @Now, NULL),
+(19, N'Endless crafting and bosses. Perfect with friends.', 10, 3, 18, @Now, NULL),
+(20, N'Mods keep Skyrim immortal. Still discovering quests.', 9, 2, 19, @Now, NULL),
+(21, N'Rip and tear never felt this fast.', 9, 3, 20, @Now, NULL),
+(22, N'Hunt loop is addictive once you learn the monsters.', 8, 2, 21, @Now, NULL),
+(23, N'Best co-op experience I''ve played with my partner.', 10, 3, 22, @Now, NULL),
+(24, N'Remake elevates a classic. Tension every encounter.', 10, 2, 23, @Now, NULL),
+(25, N'Writing so good it rewired how I see RPGs.', 10, 3, 24, @Now, NULL),
+(26, N'Short, precise, emotional. Assist mode is welcome.', 10, 2, 25, @Now, NULL),
+(27, N'Scary, funny, and perfect in a four-stack.', 9, 3, 26, @Now, NULL);
 SET IDENTITY_INSERT dbo.GameReviews OFF;
 
 -- Community chat
@@ -209,4 +300,4 @@ INSERT INTO dbo.UserEntityUserEntity (MyFriendsId, WhoIsMyFriendsId) VALUES
 
 COMMIT TRANSACTION;
 
-PRINT 'Seed completed successfully (popular Steam catalog).';
+PRINT 'Seed completed successfully (26 popular Steam titles; Featured = games after first 15).';
