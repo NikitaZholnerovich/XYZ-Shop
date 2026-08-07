@@ -132,14 +132,16 @@ Target setup: **one Compute Engine VM**, **two Docker containers** (`web` + `mss
 
 High-level flow:
 
-1. Create an Ubuntu VM (`e2-medium` or larger — SQL Server needs RAM).
-2. Open firewall TCP **80**; install Docker Compose on the VM.
-3. Clone the repo, configure `.env`, run `docker compose up -d --build`.
-4. Apply schema with `dotnet ef database update`, then run `scripts/seed-data.sql`.
-5. Open `http://<VM_EXTERNAL_IP>/`.
+1. Push the repo (Dockerfile, compose, seed script) to GitHub.
+2. Create an Ubuntu/Debian VM (`e2-standard-2` recommended, **30 GB** disk — resize filesystem inside the OS).
+3. Firewall: network tag `http-server` + TCP **80**.
+4. Install Docker; `cp .env.example .env`; set SA password / JWT / RAWG; `docker compose up -d --build`.
+5. Install .NET 8 + `dotnet-ef` **8.x** (fix ICU on Debian); run `database update` with `--connection` to `localhost,1433` (not LocalDB).
+6. Run `scripts/seed-data.sql` via `sqlcmd` with flags **`-C -I`**.
+7. Restart `web` after migrate/seed, then open `http://<VM_EXTERNAL_IP>/`.
 
-Full walkthrough (project setup, firewall, SSH, `.env`, migrations, seed, verification, updates, troubleshooting, costs):  
-**[docs/deploy-gcp.md](docs/deploy-gcp.md)**.
+Full walkthrough with all known pitfalls (disk resize, `!` in passwords, LocalDB, ICU, firewall, web crash before migrations):  
+**[docs/deploy-gcp.md](docs/deploy-gcp.md)** (подробный гайд на русском).
 
 ## Main features
 

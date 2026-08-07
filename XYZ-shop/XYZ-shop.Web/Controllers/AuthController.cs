@@ -58,17 +58,14 @@ namespace XYZ_shop.Web.Controllers
                 return View(viewModel);
             }
 
-            try
-            {
-                var user = _authService.Register(viewModel.Login, viewModel.Password);
-                _jwtTokenService.WriteTokenToCookie(user);
-            }
-            catch (InvalidOperationException)
+            var user = _authService.Register(viewModel.Login, viewModel.Password);
+            if (user == null)
             {
                 ModelState.AddModelError(nameof(LoginViewModel.Login), "Name is already used");
                 return View(viewModel);
             }
 
+            _jwtTokenService.WriteTokenToCookie(user);
             return RedirectToAction("Index", "Steam");
         }
 

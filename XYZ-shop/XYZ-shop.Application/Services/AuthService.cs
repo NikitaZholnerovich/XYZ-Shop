@@ -36,11 +36,11 @@ namespace XYZ_shop.Application.Services
             return user;
         }
 
-        public UserEntity Register(string login, string password)
+        public UserEntity? Register(string login, string password)
         {
             if (!_userRepository.IsLoginUnique(login))
             {
-                throw new InvalidOperationException("Login is already used");
+                return null;
             }
 
             var user = new UserEntity
